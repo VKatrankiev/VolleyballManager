@@ -5,11 +5,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.FragmentOne;
+import com.example.user1.volleyballmanager20.cmn.Player;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnReg;
     EditText edtPass;
     Button btnSearch;
+    public static ArrayList<Player> players;
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -26,16 +36,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+
         edtUserName = (EditText) findViewById(R.id.edtxt_us);
         edtPass = (EditText) findViewById(R.id.edtxt_pass);
         btnReg = (Button) findViewById(R.id.btn_reg);
         btnSearch = (Button) findViewById(R.id.btn_search);
 
+        Firebase.setAndroidContext(this);
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,RegistrationActivity.class);
 
+                Firebase rootRef = new Firebase(Config.FIREBASE_URL);
+                Player player = new Player();
+                player.setHeight(159);
+                player.setName("Kolio");
+                player.setPosition(Config.MIDDLE_BLOCKER);
+                rootRef.child("Player").setValue(player);
             }
         });
 
@@ -47,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     public void getFragmentWithTag(Fragment fragment, String tag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);

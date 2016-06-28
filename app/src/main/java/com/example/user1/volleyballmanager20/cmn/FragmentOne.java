@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.user1.volleyballmanager20.MainActivity;
 import com.example.user1.volleyballmanager20.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by user1 on 26.6.2016 г..
@@ -29,7 +32,7 @@ public class FragmentOne extends Fragment {
     protected RecyclerView mRecyclerView;
     protected CustomAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected Player[] players;
+    protected ArrayList<Player> players;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,11 +43,9 @@ public class FragmentOne extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        players = MainActivity.players;
         View rootView = inflater.inflate(R.layout.search_players, container, false);
         rootView.setTag(TAG);
-
-
-
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
