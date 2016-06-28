@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.FragmentOne;
 import com.example.user1.volleyballmanager20.cmn.Player;
 import com.firebase.client.DataSnapshot;
@@ -28,7 +29,7 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
     EditText edtHeight;
     EditText edtPosition;
     Button btnRegister;
-    public static final String FIREBASE_URL = "https://volleyball-manager.firebaseio.com/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +46,15 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
 
 
         Firebase.setAndroidContext(this);
-        final Firebase rootRef = new Firebase(FIREBASE_URL);
+        final Firebase rootRef = new Firebase(Config.FIREBASE_URL);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String name = String.valueOf(edtName.getText());
                 String position = String.valueOf(edtPosition.getText());
                 int height = Integer.parseInt(edtHeight.getText().toString());
-                Player player = new Player(name, height, position);
+                Player player = new Player();
+                player.setHeight(height);
                 rootRef.child("players").setValue(player);
             }
         });

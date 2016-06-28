@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.example.user1.volleyballmanager20.R;
 
+import java.util.ArrayList;
+
 /**
  * Created by user1 on 26.6.2016 г..
  */
@@ -18,7 +20,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private String height;
     private String position;
 
-    private Player[] players;
+    private ArrayList<Player> players;
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -60,7 +62,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      *
      * @param players String[] containing the data to populate views to be used by RecyclerView.
      */
-    public CustomAdapter(Player[] players) {
+    public CustomAdapter(ArrayList<Player> players) {
         this.players = players;
     }
 
@@ -78,7 +80,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Log.d(TAG, "Element " + position + " set.");
-        Player currentPlayer = players[position];
+        Player currentPlayer = players.get(position);
         viewHolder.playerName.setText(currentPlayer.getName());
         viewHolder.playerHeight.setText(currentPlayer.getHeight());
         viewHolder.playerPosition.setText(currentPlayer.getPosition());
@@ -87,6 +89,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return players.length;
+        return players.size();
     }
 }

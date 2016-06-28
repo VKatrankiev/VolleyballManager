@@ -8,17 +8,7 @@ public class Player {
     private int height;
     private String position;
 
-    private static final String SETTER = "S";
-    private static final String OPPOSITE = "O";
-    private static final String OUTSIDE_HITTER = "OH";
-    private static final String LIBERO = "L";
-    private static final String MIDDLE_BLOCKER = "MB";
-
-
-    public Player(String name, int height, String position) {
-        this.name = name;
-        this.height = height;
-        this.position = position;
+    public Player (){
     }
 
     public String getName() {
@@ -42,11 +32,11 @@ public class Player {
     }
 
     public void setPosition(String position) {
-        if(position.equals(SETTER) || position.equals(OPPOSITE) || position.equals(OUTSIDE_HITTER)
-                || position.equals(LIBERO) || position.equals(MIDDLE_BLOCKER)){
+        if(position.equals(Config.SETTER) || position.equals(Config.OPPOSITE) || position.equals(Config.OUTSIDE_HITTER)
+                || position.equals(Config.LIBERO) || position.equals(Config.MIDDLE_BLOCKER)){
             this.position=position;
         } else {
-            this.position = OUTSIDE_HITTER;
+            this.position = Config.OUTSIDE_HITTER;
         }
     }
 }
