@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.FragmentOne;
@@ -33,29 +34,39 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        players = new ArrayList<>();
+        Firebase.setAndroidContext(this);
+        Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
+        rootRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Player player = postSnapshot.getValue(Player.class);
+                    players.add(player);
+                }
+            }
 
-
-
-
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+        //Toast.makeText(MainActivity.this, players.get(0).getName(), Toast.LENGTH_SHORT).show();
 
         edtUserName = (EditText) findViewById(R.id.edtxt_us);
         edtPass = (EditText) findViewById(R.id.edtxt_pass);
         btnReg = (Button) findViewById(R.id.btn_reg);
         btnSearch = (Button) findViewById(R.id.btn_search);
 
-        Firebase.setAndroidContext(this);
+
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Firebase rootRef = new Firebase(Config.FIREBASE_URL);
-                Player player = new Player();
-                player.setHeight(159);
-                player.setName("Kolio");
-                player.setPosition(Config.MIDDLE_BLOCKER);
-                rootRef.child("Player").setValue(player);
+
             }
         });
 

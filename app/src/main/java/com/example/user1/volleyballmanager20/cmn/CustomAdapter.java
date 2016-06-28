@@ -82,7 +82,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         Log.d(TAG, "Element " + position + " set.");
         Player currentPlayer = players.get(position);
         viewHolder.playerName.setText(currentPlayer.getName());
-        viewHolder.playerHeight.setText(currentPlayer.getHeight());
+        viewHolder.playerHeight.setText(String.valueOf(currentPlayer.getHeight()));
         viewHolder.playerPosition.setText(currentPlayer.getPosition());
     }
 

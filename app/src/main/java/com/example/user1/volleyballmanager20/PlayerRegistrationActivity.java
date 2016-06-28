@@ -55,7 +55,8 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
                 int height = Integer.parseInt(edtHeight.getText().toString());
                 Player player = new Player();
                 player.setHeight(height);
-                rootRef.child("players").setValue(player);
+
+                rootRef.child("Player").setValue(player);
             }
         });
 
