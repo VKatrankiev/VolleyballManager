@@ -58,10 +58,10 @@ public class RegistrationActivity extends AppCompatActivity {
             User user = new User();
             Boolean hasUserName = false;
             Boolean hasEmail = false;
+            Boolean hasTeamName = false;
 
             @Override
             public void onClick(View view) {
-
 
                 String userName = edtRegistrationUsername.getText().toString().trim();
                 String firstName = edtFName.getText().toString().trim();
@@ -70,14 +70,12 @@ public class RegistrationActivity extends AppCompatActivity {
                 String email = edtEmail.getText().toString().trim();
                 String teamName = edtTeam.getText().toString().trim();
 
-
                 user.setUserName(userName, RegistrationActivity.this);
                 user.setfName(firstName, RegistrationActivity.this);
                 user.setPassword(pass, RegistrationActivity.this);
                 user.setsName(sirName, RegistrationActivity.this);
                 user.setEmail(email, RegistrationActivity.this);
                 user.setTeamName(teamName, RegistrationActivity.this);
-
 
                 ref.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -104,13 +102,17 @@ public class RegistrationActivity extends AppCompatActivity {
                                     hasEmail = true;
                                     break;
                                 }
-
+                                if(user1.getTeamName().equals(user.getTeamName())){
+                                    Toast.makeText(RegistrationActivity.this,"Team name already taken!",Toast.LENGTH_LONG).show();
+                                    hasTeamName = true;
+                                    break;
+                                }
                             }
-
-
                         }
-                        if (hasUserName == false && hasEmail == false) {
+                        if (hasUserName == false && hasEmail == false && hasTeamName == false) {
                             ref.child("User").push().setValue(user);
+                            Intent intent = new Intent(RegistrationActivity.this,MainActivity.class);
+                            startActivity(intent);
                         }
                     }
 

@@ -29,11 +29,9 @@ public class MainActivity extends AppCompatActivity {
     Button btnReg;
     EditText edtPass;
     Button btnSearch;
-<<<<<<< HEAD
     private boolean flag = false;
-=======
-    Button button;
->>>>>>> refs/remotes/origin/master
+    Button btnLogin;
+
     public static ArrayList<Player> players;
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -47,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
         players = new ArrayList<>();
         Firebase.setAndroidContext(this);
         final Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
-        if(!flag) {
+        if (!flag) {
             rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
+                @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Log.e("players count", String.valueOf(dataSnapshot.getChildrenCount()));
@@ -71,14 +69,44 @@ public class MainActivity extends AppCompatActivity {
         edtPass = (EditText) findViewById(R.id.edtxt_pass);
         btnReg = (Button) findViewById(R.id.btn_reg);
         btnSearch = (Button) findViewById(R.id.btn_search);
-        button = (Button) findViewById(R.id.button);
+        btnLogin = (Button) findViewById(R.id.btn_login);
 
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PlayerRegistrationActivity.class);
+                Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
                 startActivity(intent);
+            }
 
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+            Firebase ref = new Firebase(Config.FIREBASE_URL);
+            @Override
+            public void onClick(View view) {
+
+                ref.child("User").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                            User user1 = postSnapshot.getValue(User.class);
+
+                            if(user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
+                                    user1.getPassword().equals(String.valueOf(edtPass.getText()))){
+                                Toast.makeText(MainActivity.this,"da",Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(MainActivity.this,"Incorrect username or password",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+            }
         });
 
 
@@ -86,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FragmentOne fragment = new FragmentOne();
-                getFragmentWithTag(fragment,null);
+                getFragmentWithTag(fragment, null);
             }
         });
-
+    }
 
 
     public void getFragmentWithTag(Fragment fragment, String tag) {
