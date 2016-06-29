@@ -20,6 +20,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnReg;
     EditText edtPass;
     Button btnSearch;
+    private boolean flag = false;
     public static ArrayList<Player> players;
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -39,21 +42,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         players = new ArrayList<>();
         Firebase.setAndroidContext(this);
-        Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
-        rootRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Player player = postSnapshot.getValue(Player.class);
-                    players.add(player);
+        final Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
+        if(!flag) {
+            rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Log.e("players count", String.valueOf(dataSnapshot.getChildrenCount()));
+                        Player player = postSnapshot.getValue(Player.class);
+                        players.add(player);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    System.out.println("The read failed: " + firebaseError.getMessage());
+                }
+            });
+            flag = true;
+        }
         //Toast.makeText(MainActivity.this, players.get(0).getName(), Toast.LENGTH_SHORT).show();
 
         edtUserName = (EditText) findViewById(R.id.edtxt_us);
@@ -65,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                Intent intent = new Intent(MainActivity.this, PlayerRegistrationActivity.class);
+                startActivity(intent);
             }
         });
 

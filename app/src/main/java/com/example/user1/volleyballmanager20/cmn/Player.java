@@ -7,8 +7,17 @@ public class Player {
     private String name;
     private int height;
     private String position;
+    private int age;
 
     public Player (){
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getName() {
@@ -38,5 +47,12 @@ public class Player {
         } else {
             this.position = Config.OUTSIDE_HITTER;
         }
+    }
+    public boolean isPositionCorrect(String position){
+        if(position.equals(Config.SETTER) || position.equals(Config.OPPOSITE) || position.equals(Config.OUTSIDE_HITTER)
+                || position.equals(Config.LIBERO) || position.equals(Config.MIDDLE_BLOCKER)){
+            return true;
+        }
+        return false;
     }
 }
