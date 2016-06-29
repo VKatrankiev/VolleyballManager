@@ -29,7 +29,11 @@ public class MainActivity extends AppCompatActivity {
     Button btnReg;
     EditText edtPass;
     Button btnSearch;
+<<<<<<< HEAD
     private boolean flag = false;
+=======
+    Button button;
+>>>>>>> refs/remotes/origin/master
     public static ArrayList<Player> players;
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -67,15 +71,16 @@ public class MainActivity extends AppCompatActivity {
         edtPass = (EditText) findViewById(R.id.edtxt_pass);
         btnReg = (Button) findViewById(R.id.btn_reg);
         btnSearch = (Button) findViewById(R.id.btn_search);
-
+        button = (Button) findViewById(R.id.button);
 
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PlayerRegistrationActivity.class);
                 startActivity(intent);
-            }
+
         });
+
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 getFragmentWithTag(fragment,null);
             }
         });
-    }
+
 
 
     public void getFragmentWithTag(Fragment fragment, String tag) {
