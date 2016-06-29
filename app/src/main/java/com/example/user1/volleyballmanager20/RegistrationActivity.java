@@ -62,7 +62,6 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 String userName = edtRegistrationUsername.getText().toString().trim();
                 String firstName = edtFName.getText().toString().trim();
                 String pass = edtRegPass.getText().toString().trim();
@@ -70,14 +69,12 @@ public class RegistrationActivity extends AppCompatActivity {
                 String email = edtEmail.getText().toString().trim();
                 String teamName = edtTeam.getText().toString().trim();
 
-
                 user.setUserName(userName, RegistrationActivity.this);
                 user.setfName(firstName, RegistrationActivity.this);
                 user.setPassword(pass, RegistrationActivity.this);
                 user.setsName(sirName, RegistrationActivity.this);
                 user.setEmail(email, RegistrationActivity.this);
                 user.setTeamName(teamName, RegistrationActivity.this);
-
 
                 ref.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -104,16 +101,12 @@ public class RegistrationActivity extends AppCompatActivity {
                                     hasEmail = true;
                                     break;
                                 }
-
                             }
-
-
                         }
                         if (hasUserName == false && hasEmail == false) {
                             ref.child("User").push().setValue(user);
                         }
                     }
-
                     @Override
                     public void onCancelled(FirebaseError firebaseError) {
                         System.out.println("The read failed: " + firebaseError.getMessage());

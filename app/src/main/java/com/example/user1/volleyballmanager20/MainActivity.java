@@ -70,15 +70,22 @@ public class MainActivity extends AppCompatActivity {
         btnSearch = (Button) findViewById(R.id.btn_search);
         button = (Button) findViewById(R.id.button);
 
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PlayerRegistrationActivity.class);
+                startActivity(intent);
+            }
+        });
+
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PlayerRegistrationActivity.class);
+                Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
                 startActivity(intent);
 
             }
         });
-
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void getFragmentWithTag(Fragment fragment, String tag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

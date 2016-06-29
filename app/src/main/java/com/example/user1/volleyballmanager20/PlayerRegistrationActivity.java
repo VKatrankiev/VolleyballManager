@@ -97,7 +97,7 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.replace(R.id.layoutFragmentContainer, fragment, tag).commit();
+        transaction.replace(R.id.layoutFragmentContainer2, fragment, tag).commit();
     }
 
     @Override
