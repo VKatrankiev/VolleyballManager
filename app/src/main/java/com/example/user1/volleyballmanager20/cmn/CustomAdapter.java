@@ -20,6 +20,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private String height;
     private String position;
 
+
     private ArrayList<Player> players;
 
     /**
@@ -29,6 +30,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         private final TextView playerName;
         private final TextView playerHeight;
         private final TextView playerPosition;
+        private final TextView playerAge;
 
 
         public ViewHolder(View v) {
@@ -43,6 +45,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             playerName = (TextView) v.findViewById(R.id.player_name);
             playerHeight = (TextView) v.findViewById(R.id.player_height);
             playerPosition = (TextView) v.findViewById(R.id.player_position);
+            playerAge = (TextView) v.findViewById(R.id.player_age);
 
         }
 
@@ -55,6 +58,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         public TextView getPlayerPosition() {
             return playerPosition;
         }
+
     }
 
     /**
@@ -82,8 +86,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         Log.d(TAG, "Element " + position + " set.");
         Player currentPlayer = players.get(position);
         viewHolder.playerName.setText(currentPlayer.getName());
-        viewHolder.playerHeight.setText(currentPlayer.getHeight());
+        viewHolder.playerHeight.setText(String.valueOf(currentPlayer.getHeight()));
         viewHolder.playerPosition.setText(currentPlayer.getPosition());
+        viewHolder.playerAge.setText(String.valueOf(currentPlayer.getAge()));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

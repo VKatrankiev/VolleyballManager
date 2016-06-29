@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.FragmentOne;
@@ -28,6 +29,7 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
     EditText edtName;
     EditText edtHeight;
     EditText edtPosition;
+    EditText edtAge;
     Button btnRegister;
 
 
@@ -42,31 +44,36 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
         edtName = (EditText) findViewById(R.id.player_name_register);
         edtHeight = (EditText) findViewById(R.id.player_height_register);
         edtPosition = (EditText) findViewById(R.id.player_position_register);
+        edtAge = (EditText) findViewById(R.id.player_age_register);
         btnRegister = (Button) findViewById(R.id.btn_player_register);
 
-
-        Firebase.setAndroidContext(this);
-        final Firebase rootRef = new Firebase(Config.FIREBASE_URL);
+        final Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String name = String.valueOf(edtName.getText());
                 String position = String.valueOf(edtPosition.getText());
                 int height = Integer.parseInt(edtHeight.getText().toString());
+                int age = Integer.parseInt(edtAge.getText().toString());
                 Player player = new Player();
                 player.setHeight(height);
-                rootRef.child("players").setValue(player);
+                player.setName(name);
+                player.setAge(age);
+                if (player.isPositionCorrect(position)) {
+                    player.setPosition(position);
+                    rootRef.push().setValue(player);
+                } else {
+                    Toast.makeText(PlayerRegistrationActivity.this, "Incorrect position!", Toast.LENGTH_LONG);
+                }
             }
         });
 
         rootRef.addValueEventListener(new ValueEventListener() {
-            //may slow down the process if there are a lot of players!!
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    //Getting the data from snapshot
                     Player player = postSnapshot.getValue(Player.class);
-                    players.add(player); //
+                    players.add(player);
                 }
             }
 
@@ -95,10 +102,15 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_search) {
-            FragmentOne fragment = new FragmentOne();
-            getFragmentWithTag(fragment,null);
+        switch (item.getItemId()) {
+            case R.id.action_search: {
+                FragmentOne fragment = new FragmentOne();
+                getFragmentWithTag(fragment, null);
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
         }
-        return super.onOptionsItemSelected(item);
     }
 }

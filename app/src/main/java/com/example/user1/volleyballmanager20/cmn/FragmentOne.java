@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.user1.volleyballmanager20.MainActivity;
 import com.example.user1.volleyballmanager20.R;
@@ -43,6 +44,7 @@ public class FragmentOne extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        players = new ArrayList<>();
         players = MainActivity.players;
         View rootView = inflater.inflate(R.layout.search_players, container, false);
         rootView.setTag(TAG);

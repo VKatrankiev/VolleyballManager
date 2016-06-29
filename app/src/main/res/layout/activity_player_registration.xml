@@ -42,6 +42,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Player age:"
+        android:textSize="25sp"
+        android:layout_margin="10dp"
+        />
+    <EditText
+        android:id="@+id/player_age_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:inputType="number"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Player position:"
         android:textSize="25sp"
         android:layout_margin="10dp"/>
