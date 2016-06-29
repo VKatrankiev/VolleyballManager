@@ -75,15 +75,10 @@ public class MainActivity extends AppCompatActivity {
 
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
-<<<<<<< HEAD
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PlayerRegistrationActivity.class);
-=======
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,RegistrationActivity.class);
->>>>>>> refs/remotes/origin/master
                 startActivity(intent);
-            }
+
         });
 
 
@@ -94,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 getFragmentWithTag(fragment,null);
             }
         });
-    }
+
 
 
     public void getFragmentWithTag(Fragment fragment, String tag) {
