@@ -29,11 +29,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnReg;
     EditText edtPass;
     Button btnSearch;
-<<<<<<< HEAD
     private boolean flag = false;
-=======
     Button button;
->>>>>>> refs/remotes/origin/master
     public static ArrayList<Player> players;
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -47,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
         players = new ArrayList<>();
         Firebase.setAndroidContext(this);
         final Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
-        if(!flag) {
+        if (!flag) {
             rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
+                @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Log.e("players count", String.valueOf(dataSnapshot.getChildrenCount()));
@@ -79,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, PlayerRegistrationActivity.class);
                 startActivity(intent);
 
+            }
         });
 
 
@@ -86,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FragmentOne fragment = new FragmentOne();
-                getFragmentWithTag(fragment,null);
+                getFragmentWithTag(fragment, null);
             }
         });
-
+    }
 
 
     public void getFragmentWithTag(Fragment fragment, String tag) {
