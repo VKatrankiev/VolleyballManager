@@ -30,7 +30,12 @@ public class MainActivity extends AppCompatActivity {
     EditText edtPass;
     Button btnSearch;
     private boolean flag = false;
+<<<<<<< HEAD
     Button button;
+=======
+    Button btnLogin;
+
+>>>>>>> refs/remotes/origin/master
     public static ArrayList<Player> players;
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -68,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         edtPass = (EditText) findViewById(R.id.edtxt_pass);
         btnReg = (Button) findViewById(R.id.btn_reg);
         btnSearch = (Button) findViewById(R.id.btn_search);
-        button = (Button) findViewById(R.id.button);
+        btnLogin = (Button) findViewById(R.id.btn_login);
 
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -83,7 +88,39 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
                 startActivity(intent);
+            }
 
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+            Firebase ref = new Firebase(Config.FIREBASE_URL);
+            @Override
+            public void onClick(View view) {
+
+<<<<<<< HEAD
+=======
+                ref.child("User").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                            User user1 = postSnapshot.getValue(User.class);
+
+                            if(user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
+                                    user1.getPassword().equals(String.valueOf(edtPass.getText()))){
+                                Toast.makeText(MainActivity.this,"da",Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(MainActivity.this,"Incorrect username or password",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+>>>>>>> refs/remotes/origin/master
             }
         });
 
@@ -95,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/master
 
     public void getFragmentWithTag(Fragment fragment, String tag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

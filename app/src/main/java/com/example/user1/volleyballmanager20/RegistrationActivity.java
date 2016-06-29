@@ -58,6 +58,7 @@ public class RegistrationActivity extends AppCompatActivity {
             User user = new User();
             Boolean hasUserName = false;
             Boolean hasEmail = false;
+            Boolean hasTeamName = false;
 
             @Override
             public void onClick(View view) {
@@ -101,10 +102,20 @@ public class RegistrationActivity extends AppCompatActivity {
                                     hasEmail = true;
                                     break;
                                 }
+<<<<<<< HEAD
+=======
+                                if(user1.getTeamName().equals(user.getTeamName())){
+                                    Toast.makeText(RegistrationActivity.this,"Team name already taken!",Toast.LENGTH_LONG).show();
+                                    hasTeamName = true;
+                                    break;
+                                }
+>>>>>>> refs/remotes/origin/master
                             }
                         }
-                        if (hasUserName == false && hasEmail == false) {
+                        if (hasUserName == false && hasEmail == false && hasTeamName == false) {
                             ref.child("User").push().setValue(user);
+                            Intent intent = new Intent(RegistrationActivity.this,MainActivity.class);
+                            startActivity(intent);
                         }
                     }
                     @Override
