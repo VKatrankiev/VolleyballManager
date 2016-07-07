@@ -1,7 +1,6 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,15 +14,12 @@ import android.widget.Toast;
 import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.FragmentOne;
 import com.example.user1.volleyballmanager20.cmn.Player;
-import com.example.user1.volleyballmanager20.cmn.Team;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,14 +28,11 @@ public class MainActivity extends AppCompatActivity {
     EditText edtPass;
     Button btnSearch;
     private boolean flag = false;
-<<<<<<< HEAD
     Button button;
-=======
     Button btnLogin;
 
->>>>>>> refs/remotes/origin/master
     public static ArrayList<Player> players;
-    public static User demouUser;
+    public static User demoUser;
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -79,13 +72,6 @@ public class MainActivity extends AppCompatActivity {
         btnSearch = (Button) findViewById(R.id.btn_search);
         btnLogin = (Button) findViewById(R.id.btn_login);
 
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, PlayerRegistrationActivity.class);
-                startActivity(intent);
-            }
-        });
 
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,12 +108,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
 
->>>>>>> refs/remotes/origin/master
                 ref.child("User").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
@@ -136,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
                             if (user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
                                     user1.getPassword().equals(String.valueOf(edtPass.getText()))) {
-                                demouUser = user1;
+                                demoUser = user1;
                                 Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
                                 Log.e("uu", user1.getUserName());
                                 //i.putExtra("userTag", user1);
@@ -160,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
->>>>>>> refs/remotes/origin/master
             }
         });
 
@@ -172,10 +152,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/master
 
     public void getFragmentWithTag(Fragment fragment, String tag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

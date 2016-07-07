@@ -1,5 +1,7 @@
 package com.example.user1.volleyballmanager20;
 
+import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -51,20 +53,42 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 String name = String.valueOf(edtName.getText());
                 String position = String.valueOf(edtPosition.getText());
                 int height = Integer.parseInt(edtHeight.getText().toString());
                 int age = Integer.parseInt(edtAge.getText().toString());
-                Player player = new Player();
+                final Player player = new Player();
                 player.setHeight(height);
                 player.setName(name);
                 player.setAge(age);
                 if (player.isPositionCorrect(position)) {
                     player.setPosition(position);
+                    rootRef.child("User").
+                    rootRef.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                User tempUser = snapshot.getValue(User.class);
+                                if(tempUser.getUserName().equals(MainActivity.demoUser.getUserName())){
+                                    tempUser.getTeam().addPlayer(player);
+                                    MainActivity.demoUser.getTeam().addPlayer(player);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
                     rootRef.push().setValue(player);
+                    LoggedInActivity.loggedTeam.addPlayer(player);
+                    MainActivity.demoUser.getTeam().addPlayer(player);
                 } else {
                     Toast.makeText(PlayerRegistrationActivity.this, "Incorrect position!", Toast.LENGTH_LONG);
                 }
+                startActivity(new Intent(PlayerRegistrationActivity.this, LoggedInActivity.class));
             }
         });
 

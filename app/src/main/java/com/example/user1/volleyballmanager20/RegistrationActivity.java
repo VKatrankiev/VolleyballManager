@@ -91,6 +91,9 @@ public class RegistrationActivity extends AppCompatActivity {
 //                nekvi.add(pl1);
 
                 Team team = new Team();
+                team.setAllPlayers(new ArrayList<Player>());
+                team.setCaptain(new Player());
+                team.setStartingList(new ArrayList<Player>());
                 team.setName(teamName);
                 user.setUserName(userName);
                 user.setfName(firstName);
@@ -155,33 +158,32 @@ public class RegistrationActivity extends AppCompatActivity {
                                     hasEmail = true;
                                     break;
                                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                                if(user1.getTeamName().equals(user.getTeamName())){
-                                    Toast.makeText(RegistrationActivity.this,"Team name already taken!",Toast.LENGTH_LONG).show();
-=======
-                                if (user1.getTeam().equals(user.getTeam())) {
+                                if (user1.getTeam().getName().equals(user.getTeam().getName())) {
                                     Toast.makeText(RegistrationActivity.this, "Team name already taken!", Toast.LENGTH_LONG).show();
->>>>>>> refs/remotes/origin/master
                                     hasTeamName = true;
                                     break;
+
                                 }
->>>>>>> refs/remotes/origin/master
                             }
+                            if (hasUserName == false && hasEmail == false && hasTeamName == false && flag == false) {
+                                ref.child("User").push().setValue(user);
+                                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+
                         }
-                        if (hasUserName == false && hasEmail == false && hasTeamName == false && flag == false) {
-                            ref.child("User").push().setValue(user);
-                            Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }
+
                     }
+
                     @Override
                     public void onCancelled(FirebaseError firebaseError) {
                         System.out.println("The read failed: " + firebaseError.getMessage());
                     }
+
                 });
             }
+
+
         });
     }
 }

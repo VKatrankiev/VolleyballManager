@@ -22,7 +22,8 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView playerName;
         private final TextView playerTitular;
-        private final TextView playerPosition;;
+        private final TextView playerPosition;
+        ;
         private final TextView playerCaptain;
 
 
@@ -39,17 +40,25 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
         public TextView getPlayerName() {
             return playerName;
         }
+
         public TextView getPlayerTitular() {
             return playerTitular;
         }
+
         public TextView getPlayerPosition() {
             return playerPosition;
         }
-        public TextView getPlayerCaptain() {return playerCaptain;}
+
+        public TextView getPlayerCaptain() {
+            return playerCaptain;
+        }
 
     }
 
-    public TeamAdapter (Team team){this.team = team;}
+    public TeamAdapter(Team team) {
+        this.team = team;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
@@ -65,33 +74,31 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
 
         holder.playerName.setText(currentPlayer.getName());
 
-        if(team.getStartingList().isEmpty()){
+        if (team.getStartingList() == null) {
             holder.playerTitular.setText("");
-        }else{
-            if(team.getStartingList().contains(currentPlayer)){
+        } else {
+            if (team.getStartingList().contains(currentPlayer)) {
                 holder.playerTitular.setText("T");
-            }else{
+            } else {
                 holder.playerTitular.setText("");
             }
         }
         holder.playerPosition.setText(currentPlayer.getPosition());
-        if(team.getCaptain().equals(currentPlayer)){
+        if (team.getCaptain().equals(currentPlayer)) {
             holder.playerCaptain.setText("C");
-        }else{
+        } else {
             holder.playerCaptain.setText("");
         }
     }
 
     @Override
     public int getItemCount() {
-
+        if (team.getAllPlayers()!=null) {
             return team.getAllPlayers().size();
+        } else {
+            return 0;
+        }
+
 
     }
-
-
-
-
-
-
 }

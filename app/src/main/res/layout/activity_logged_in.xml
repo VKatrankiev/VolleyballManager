@@ -22,19 +22,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
+        android:text="Add player"
+        android:id="@+id/btn_add_player"
         android:layout_below="@+id/my_recycler_view"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2"
+        android:layout_alignLeft="@+id/btn_draw_scheme"
+        android:layout_alignStart="@+id/btn_draw_scheme"
         android:layout_marginTop="71dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
-        android:id="@+id/button2"
-        android:layout_below="@+id/button"
+        android:id="@+id/btn_draw_scheme"
+        android:layout_below="@+id/btn_add_player"
         android:layout_centerHorizontal="true" />
 
     <TextView

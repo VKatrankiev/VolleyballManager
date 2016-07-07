@@ -1,29 +1,9 @@
 package com.example.user1.volleyballmanager20.cmn;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 
 /**
  * Created by user1 on 29.6.2016 г..
- */
-public class Team {
-
-    private ArrayList<Player> allPlayers;
-    private Player captain;
-    private Player[] startingList;
-
-    public Team(ArrayList<Player> allPlayers, Player captain, Player[] startingList) {
-        this.allPlayers = allPlayers;
-        this.captain = captain;
-        this.startingList = startingList;
-=======
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.ArrayList;
-
-/**
- * Created by User on 6/29/2016.
  */
 public class Team {
 
@@ -32,6 +12,12 @@ public class Team {
     private Player captain;
     private ArrayList<Player> startingList;
 
+    public Team(ArrayList<Player> allPlayers, Player captain, ArrayList<Player> startingList, String name) {
+        this.allPlayers = allPlayers;
+        this.captain = captain;
+        this.startingList = startingList;
+        this.name = name;
+    }
 
     public String getName() {
         return name;
@@ -42,7 +28,6 @@ public class Team {
     }
 
     public Team() {
->>>>>>> refs/remotes/origin/master
     }
 
     public ArrayList<Player> getAllPlayers() {
@@ -61,16 +46,7 @@ public class Team {
         this.captain = captain;
     }
 
-<<<<<<< HEAD
-    public Player[] getStartingList() {
-        return startingList;
-    }
 
-    public void setStartingList(Player[] startingList) {
-        this.startingList = startingList;
-    }
-}
-=======
     public ArrayList<Player> getStartingList() {
         return startingList;
     }
@@ -79,6 +55,11 @@ public class Team {
         this.startingList = startingList;
     }
 
-}
+    public void addPlayer(Player player) {
+        if (this.allPlayers == null) {
+            this.allPlayers = new ArrayList<>();
+        }
+        this.allPlayers.add(player);
+    }
 
->>>>>>> refs/remotes/origin/master
+}
