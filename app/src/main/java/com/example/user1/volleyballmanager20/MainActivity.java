@@ -1,6 +1,7 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.FragmentOne;
 import com.example.user1.volleyballmanager20.cmn.Player;
+import com.example.user1.volleyballmanager20.cmn.Team;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
 >>>>>>> refs/remotes/origin/master
     public static ArrayList<Player> players;
+    public static User demouUser;
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //startActivity(new Intent(this, TacticsActivity.class));
         players = new ArrayList<>();
         Firebase.setAndroidContext(this);
         final Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
@@ -93,25 +97,61 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//                                User vladi = new User();
+//                vladi.setsName("ivanov");
+//                vladi.setfName("pesho");
+//                vladi.setEmail("jsdfjdfj@abv.bg", MainActivity.this);
+//                vladi.setTeam(new Team());
+//                vladi.setPassword("12345");
+//                vladi.setUserName("The Something D");
+//                Intent intent = new Intent(MainActivity.this, LoggedInActivity.class);
+//                intent.putExtra("user", vladi);
+//                startActivity(intent);
+            }
+        });
+
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            Boolean loggedIn = false;
 
             Firebase ref = new Firebase(Config.FIREBASE_URL);
+
             @Override
             public void onClick(View view) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+
+>>>>>>> refs/remotes/origin/master
                 ref.child("User").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                             User user1 = postSnapshot.getValue(User.class);
 
-                            if(user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
-                                    user1.getPassword().equals(String.valueOf(edtPass.getText()))){
-                                Toast.makeText(MainActivity.this,"da",Toast.LENGTH_LONG).show();
-                            }else{
-                                Toast.makeText(MainActivity.this,"Incorrect username or password",Toast.LENGTH_LONG).show();
+                            if (user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
+                                    user1.getPassword().equals(String.valueOf(edtPass.getText()))) {
+                                demouUser = user1;
+                                Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
+                                Log.e("uu", user1.getUserName());
+                                //i.putExtra("userTag", user1);
+                                //i.putParcelableArrayListExtra("captain",user1.getTeam().getAllPlayers());                               Log.e("az124",user1.getTeam().getCaptain().getName());
+                                loggedIn = true;
+                                startActivity(i);
+                                Toast.makeText(MainActivity.this, "da", Toast.LENGTH_LONG).show();
+
+                                break;
                             }
+
+
+                        }
+                        if (loggedIn == false) {
+                            Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
                         }
                     }
 

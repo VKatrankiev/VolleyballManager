@@ -19,7 +19,9 @@
         </activity>
         <activity android:name=".PlayerRegistrationActivity" />
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".LoggedInActivity"></activity>
+        <activity android:name=".LoggedInActivity" />
+        <activity android:name=".TacticsActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

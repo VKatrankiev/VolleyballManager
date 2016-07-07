@@ -1,5 +1,8 @@
 package com.example.user1.volleyballmanager20.cmn;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by user1 on 26.6.2016 г..
  */
@@ -11,6 +14,10 @@ public class Player {
 
     public Player (){
     }
+
+
+
+
 
     public int getAge() {
         return age;
@@ -55,4 +62,5 @@ public class Player {
         }
         return false;
     }
+
 }
