@@ -1,62 +1,76 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.Toast;
+
+import com.example.user1.volleyballmanager20.cmn.Team;
+
+import java.io.Serializable;
 
 /**
  * Created by User on 6/28/2016.
  */
-public class User {
+public class User implements Parcelable{
     private String userName;
     private String fName;
     private String sName;
     private String email;
     private String password;
-    private String teamName;
+    private Team team;
+
+    public User(Parcel in) {
+        this.userName = in.readString();
+        this.fName = in.readString();
+        this.sName =  in.readString();
+        this.email = in.readString();
+        this.password =   in.readString();;
+        this.team = in.readParcelable(Team.class.getClassLoader());
+    }
+
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName,Context context) {
-        if(userName.isEmpty()){
-            Toast.makeText(context,"You must enter username!", Toast.LENGTH_SHORT).show();
-        }
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public User() {}
+    public User(){};
+
+    public User(String userName, Team team, String password, String email, String sName, String fName) {
+        this.userName = userName;
+        this.email = email;
+        this.sName = sName;
+        this.fName = fName;
+        this.password = password;
+        this.team = team;
+    }
 
     public String getfName() {
         return fName;
     }
 
-    public void setfName(String fName,Context context) {
-        if(userName.isEmpty()){
-            Toast.makeText(context,"You must enter first name!", Toast.LENGTH_SHORT).show();
-        }
+    public void setfName(String fName) {
         this.fName = fName;
     }
 
-    public String getTeamName() {
-        return teamName;
+
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeamName(String teamName,Context context) {
-        if(userName.isEmpty()){
-            Toast.makeText(context,"You must enter team name!", Toast.LENGTH_SHORT).show();
-        }
-        this.teamName = teamName;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password,Context context) {
-        if(password.isEmpty()) {
-            Toast.makeText(context,"You must enter password!", Toast.LENGTH_SHORT).show();
-        }
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -76,10 +90,7 @@ public class User {
         return sName;
     }
 
-    public void setsName(String sName,Context context) {
-        if(userName.isEmpty()){
-            Toast.makeText(context,"You must enter sir name!", Toast.LENGTH_SHORT).show();
-        }
+    public void setsName(String sName) {
         this.sName = sName;
     }
 
@@ -90,4 +101,37 @@ public class User {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+//        parcel.writeList(team.getAllPlayers());
+//        parcel.writeList(team.getStartingList());
+//        parcel.writeValue(team.getCaptain());
+//        parcel.writeValue(team.getName());
+        parcel.writeString(this.userName);
+        parcel.writeString(this.fName);
+        parcel.writeString(this.sName);
+        parcel.writeString(this.email);
+        parcel.writeString(this.password);
+        parcel.writeParcelable(team, i);
+    }
+    public static final Parcelable.Creator<User> CREATOR= new Parcelable.Creator<User>() {
+
+        @Override
+        public User createFromParcel(Parcel source) {
+// TODO Auto-generated method stub
+            return new User(source);  //using parcelable constructor
+        }
+
+        @Override
+        public User[] newArray(int size) {
+// TODO Auto-generated method stub
+            return new User[size];
+        }
+    };
 }

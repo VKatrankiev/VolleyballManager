@@ -16,9 +16,6 @@ import java.util.ArrayList;
  */
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     private static final String TAG = "CustomAdapter";
-    private String name;
-    private String height;
-    private String position;
 
 
     private ArrayList<Player> players;
