@@ -26,7 +26,6 @@ public class LoggedInActivity extends AppCompatActivity {
     protected TeamAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
 
-    protected Team team;
     TextView txtTeamNameLoggedIn;
     String teamName;
 
@@ -36,14 +35,14 @@ public class LoggedInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_logged_in);
 
         txtTeamNameLoggedIn = (TextView) findViewById(R.id.txt_team_name_loggedin);
-
-        Bundle b = getIntent().getExtras();
-        User userLogged = b.getParcelable("userTag");
+        User userLogged = new User();
+//        Bundle b = getIntent().getExtras();
+//        User userLogged = b.getParcelable("userTag");
         //User userLogged= getIntent().getParcelableExtra("userTag");
         //Team captain = getIntent().getParcelableExtra("captain");
         //Log.e("vladi",captain.getName());
-        Log.e("ivan123",userLogged.getUserName() + userLogged.getEmail() + userLogged.getfName() + userLogged.getPassword() + userLogged.getsName());
-        Log.e("slas",userLogged.getTeam().getName());
+        //Log.e("ivan123",userLogged.getUserName() + userLogged.getEmail() + userLogged.getfName() + userLogged.getPassword() + userLogged.getsName());
+        //Log.e("slas",userLogged.getTeam().getName());
 
 //        Player ivan = new Player();
 //        ivan.setHeight(123);
@@ -64,14 +63,15 @@ public class LoggedInActivity extends AppCompatActivity {
 //        team.setStartingList(players);
 //        team.setCaptain(az);
 
-
-        team = new Team();
+        if(!MainActivity.demouUser.equals(null)) {
+            userLogged = MainActivity.demouUser;
+        }
         teamName = userLogged.getTeam().getName();
         txtTeamNameLoggedIn.setText(teamName);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new TeamAdapter(team);
+        mAdapter = new TeamAdapter(userLogged.getTeam());
         mRecyclerView.setAdapter(mAdapter);
 
     }

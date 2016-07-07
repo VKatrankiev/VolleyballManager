@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnLogin;
 
     public static ArrayList<Player> players;
+    public static User demouUser;
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //startActivity(new Intent(this, TacticsActivity.class));
         players = new ArrayList<>();
         Firebase.setAndroidContext(this);
         final Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
@@ -109,32 +111,30 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                              ref.child("User").addValueEventListener(new ValueEventListener() {
-                                   @Override
+                ref.child("User").addValueEventListener(new ValueEventListener() {
+                    @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                             User user1 = postSnapshot.getValue(User.class);
 
-                            if(user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
-                                    user1.getPassword().equals(String.valueOf(edtPass.getText()))){
-
-                                Intent i=new Intent(MainActivity.this,LoggedInActivity.class);
-                                Log.e("uu",user1.getUserName());
-                                i.putExtra("userTag",user1);
+                            if (user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
+                                    user1.getPassword().equals(String.valueOf(edtPass.getText()))) {
+                                demouUser = user1;
+                                Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
+                                Log.e("uu", user1.getUserName());
+                                //i.putExtra("userTag", user1);
                                 //i.putParcelableArrayListExtra("captain",user1.getTeam().getAllPlayers());                               Log.e("az124",user1.getTeam().getCaptain().getName());
                                 loggedIn = true;
                                 startActivity(i);
-                                Toast.makeText(MainActivity.this,"da",Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "da", Toast.LENGTH_LONG).show();
 
                                 break;
                             }
 
 
-
-
                         }
-                        if(loggedIn == false){
-                            Toast.makeText(MainActivity.this,"Incorrect username or password",Toast.LENGTH_LONG).show();
+                        if (loggedIn == false) {
+                            Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -145,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-
-
 
 
         btnSearch.setOnClickListener(new View.OnClickListener() {

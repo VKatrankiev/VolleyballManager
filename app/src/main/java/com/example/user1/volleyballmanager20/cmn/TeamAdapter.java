@@ -84,11 +84,9 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if(team.getAllPlayers()==null){
-            return 0;
-        }else{
+
             return team.getAllPlayers().size();
-        }
+
     }
 
 
