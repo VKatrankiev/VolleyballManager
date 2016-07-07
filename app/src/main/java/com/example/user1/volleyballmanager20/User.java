@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * Created by User on 6/28/2016.
  */
-public class User implements Parcelable{
+public class User {
     private String userName;
     private String fName;
     private String sName;
@@ -20,14 +20,6 @@ public class User implements Parcelable{
     private String password;
     private Team team;
 
-    public User(Parcel in) {
-        this.userName = in.readString();
-        this.fName = in.readString();
-        this.sName =  in.readString();
-        this.email = in.readString();
-        this.password =   in.readString();;
-        this.team = in.readParcelable(Team.class.getClassLoader());
-    }
 
 
     public String getUserName() {
@@ -101,37 +93,4 @@ public class User implements Parcelable{
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-//        parcel.writeList(team.getAllPlayers());
-//        parcel.writeList(team.getStartingList());
-//        parcel.writeValue(team.getCaptain());
-//        parcel.writeValue(team.getName());
-        parcel.writeString(this.userName);
-        parcel.writeString(this.fName);
-        parcel.writeString(this.sName);
-        parcel.writeString(this.email);
-        parcel.writeString(this.password);
-        parcel.writeParcelable(team, i);
-    }
-    public static final Parcelable.Creator<User> CREATOR= new Parcelable.Creator<User>() {
-
-        @Override
-        public User createFromParcel(Parcel source) {
-// TODO Auto-generated method stub
-            return new User(source);  //using parcelable constructor
-        }
-
-        @Override
-        public User[] newArray(int size) {
-// TODO Auto-generated method stub
-            return new User[size];
-        }
-    };
 }

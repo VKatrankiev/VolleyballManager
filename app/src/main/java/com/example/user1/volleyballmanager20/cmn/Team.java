@@ -8,31 +8,13 @@ import java.util.ArrayList;
 /**
  * Created by User on 6/29/2016.
  */
-public class Team implements Parcelable {
+public class Team {
 
     private String name;
     private ArrayList<Player> allPlayers;
     private Player captain;
     private ArrayList<Player> startingList;
 
-    protected Team(Parcel in) {
-        name = in.readString();
-        allPlayers = in.createTypedArrayList(Player.CREATOR);
-        captain = in.readParcelable(Player.class.getClassLoader());
-        startingList = in.createTypedArrayList(Player.CREATOR);
-    }
-
-    public static final Creator<Team> CREATOR = new Creator<Team>() {
-        @Override
-        public Team createFromParcel(Parcel in) {
-            return new Team(in);
-        }
-
-        @Override
-        public Team[] newArray(int size) {
-            return new Team[size];
-        }
-    };
 
     public String getName() {
         return name;
@@ -69,18 +51,5 @@ public class Team implements Parcelable {
         this.startingList = startingList;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-        parcel.writeString(getName());
-        parcel.writeParcelableArray((Parcelable[]) getAllPlayers().toArray(), i);
-        parcel.writeParcelable(getCaptain(), i);
-        parcel.writeParcelableArray((Parcelable[]) getStartingList().toArray(), i);
-    }
 }
 
