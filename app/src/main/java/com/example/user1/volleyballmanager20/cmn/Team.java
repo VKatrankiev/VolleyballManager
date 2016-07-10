@@ -7,24 +7,10 @@ import java.util.ArrayList;
  */
 public class Team {
 
-    private String name;
     private ArrayList<Player> allPlayers;
-    private Player captain;
-    private ArrayList<Player> startingList;
 
-    public Team(ArrayList<Player> allPlayers, Player captain, ArrayList<Player> startingList, String name) {
+    public Team(ArrayList<Player> allPlayers) {
         this.allPlayers = allPlayers;
-        this.captain = captain;
-        this.startingList = startingList;
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Team() {
@@ -36,23 +22,6 @@ public class Team {
 
     public void setAllPlayers(ArrayList<Player> allPlayers) {
         this.allPlayers = allPlayers;
-    }
-
-    public Player getCaptain() {
-        return captain;
-    }
-
-    public void setCaptain(Player captain) {
-        this.captain = captain;
-    }
-
-
-    public ArrayList<Player> getStartingList() {
-        return startingList;
-    }
-
-    public void setStartingList(ArrayList<Player> startingList) {
-        this.startingList = startingList;
     }
 
     public void addPlayer(Player player) {

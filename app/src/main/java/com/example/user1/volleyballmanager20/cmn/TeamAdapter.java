@@ -73,18 +73,17 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
         Player currentPlayer = team.getAllPlayers().get(position);
 
         holder.playerName.setText(currentPlayer.getName());
-
-        if (team.getStartingList() == null) {
+        if (currentPlayer.isTitular() == false) {
             holder.playerTitular.setText("");
         } else {
-            if (team.getStartingList().contains(currentPlayer)) {
+            if (currentPlayer.isTitular()==true) {
                 holder.playerTitular.setText("T");
             } else {
                 holder.playerTitular.setText("");
             }
         }
         holder.playerPosition.setText(currentPlayer.getPosition());
-        if (team.getCaptain().equals(currentPlayer)) {
+        if (currentPlayer.isCaptain() == true) {
             holder.playerCaptain.setText("C");
         } else {
             holder.playerCaptain.setText("");

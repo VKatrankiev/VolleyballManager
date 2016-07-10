@@ -11,13 +11,36 @@ public class Player {
     private int height;
     private String position;
     private int age;
+    private boolean isTaken;
+    private boolean isTitular;
+    private boolean isCaptain;
+
+    public boolean isTaken() {
+        return isTaken;
+    }
+
+    public void setTaken(boolean taken) {
+        isTaken = taken;
+    }
+
+    public boolean isCaptain() {
+        return isCaptain;
+    }
+
+    public void setCaptain(boolean captain) {
+        isCaptain = captain;
+    }
+
+    public boolean isTitular() {
+        return isTitular;
+    }
+
+    public void setTitular(boolean titular) {
+        isTitular = titular;
+    }
 
     public Player (){
     }
-
-
-
-
 
     public int getAge() {
         return age;

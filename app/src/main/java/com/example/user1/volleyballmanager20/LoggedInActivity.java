@@ -32,7 +32,7 @@ public class LoggedInActivity extends AppCompatActivity {
     protected TeamAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
 
-    static Team loggedTeam;
+    public static Team loggedTeam;
 
     TextView txtTeamNameLoggedIn;
     String teamName;
@@ -64,7 +64,7 @@ public class LoggedInActivity extends AppCompatActivity {
         if (MainActivity.demoUser!=null) {
             userLogged = MainActivity.demoUser;
         }
-        teamName = userLogged.getTeam().getName();
+        teamName = userLogged.getTeamName();
         txtTeamNameLoggedIn.setText(teamName);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -76,10 +76,7 @@ public class LoggedInActivity extends AppCompatActivity {
             mRecyclerView.setAdapter(mAdapter);
         } else {
             loggedTeam = new Team();
-            loggedTeam.setStartingList(new ArrayList<Player>());
-            loggedTeam.setCaptain(new Player());
             loggedTeam.setAllPlayers(new ArrayList<Player>());
-            loggedTeam.setName(teamName);
             Log.e("hello", "nope im here");
         }
 
@@ -91,7 +88,7 @@ public class LoggedInActivity extends AppCompatActivity {
         if (MainActivity.demoUser != null) {
             userLogged = MainActivity.demoUser;
         }
-        teamName = userLogged.getTeam().getName();
+        teamName = userLogged.getTeamName();
         txtTeamNameLoggedIn.setText(teamName);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());

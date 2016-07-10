@@ -19,6 +19,7 @@ public class User {
     private String email;
     private String password;
     private Team team;
+    private String teamName;
 
 
 
@@ -32,13 +33,22 @@ public class User {
 
     public User(){};
 
-    public User(String userName, Team team, String password, String email, String sName, String fName) {
+    public User(String userName, Team team, String password, String email, String sName, String fName,String teamName) {
         this.userName = userName;
         this.email = email;
         this.sName = sName;
         this.fName = fName;
         this.password = password;
         this.team = team;
+        this.teamName = teamName;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public String getfName() {

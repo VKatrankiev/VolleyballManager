@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean flag = false;
     Button button;
     Button btnLogin;
+    public static boolean isLogged = false;
 
     public static ArrayList<Player> players;
     public static User demoUser;
@@ -113,16 +114,19 @@ public class MainActivity extends AppCompatActivity {
                 ref.child("User").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
+                        demoUser = new User();
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                             User user1 = postSnapshot.getValue(User.class);
-
+                            if (demoUser.getTeam() == null){
+                                Log.e("fsdf","e=te be");
+                            }
                             if (user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
                                     user1.getPassword().equals(String.valueOf(edtPass.getText()))) {
+                                isLogged = true;
                                 demoUser = user1;
-                                if(demoUser.getTeam().getAllPlayers()==null){
+                                if (demoUser.getTeam() == null || demoUser.getTeam().getAllPlayers() == null) {
+                                    demoUser.setTeam(new Team());
                                     demoUser.getTeam().setAllPlayers(new ArrayList<Player>());
-                                    demoUser.getTeam().setStartingList(new ArrayList<Player>());
-                                    demoUser.getTeam().setCaptain(new Player());
                                 }
                                 Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
                                 Log.e("uu", user1.getUserName());
