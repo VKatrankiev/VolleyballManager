@@ -64,7 +64,6 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
                 player.setAge(age);
                 if (player.isPositionCorrect(position)) {
                     player.setPosition(position);
-                    rootRef.child("User").
                     rootRef.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {

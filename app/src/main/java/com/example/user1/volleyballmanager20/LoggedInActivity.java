@@ -1,6 +1,7 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.Player;
 import com.example.user1.volleyballmanager20.cmn.Team;
 import com.example.user1.volleyballmanager20.cmn.TeamAdapter;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -54,7 +61,7 @@ public class LoggedInActivity extends AppCompatActivity {
         });
 
         userLogged = new User();
-        if (!MainActivity.demoUser.equals(null)) {
+        if (MainActivity.demoUser!=null) {
             userLogged = MainActivity.demoUser;
         }
         teamName = userLogged.getTeam().getName();
@@ -97,6 +104,30 @@ public class LoggedInActivity extends AppCompatActivity {
         } else {
             loggedTeam = new Team();
             Log.e("cmon", "in the onresume else");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!userLogged.getTeam().getAllPlayers().equals(MainActivity.demoUser.getTeam().getAllPlayers())) {
+            Firebase ref = new Firebase(Config.FIREBASE_USERS_URL);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot shot : dataSnapshot.getChildren()) {
+                        User tempUser = shot.getValue(User.class);
+                        if (tempUser.getUserName().equals(MainActivity.demoUser.getUserName())) {
+                            shot.getRef().setValue(MainActivity.demoUser);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
         }
     }
 }

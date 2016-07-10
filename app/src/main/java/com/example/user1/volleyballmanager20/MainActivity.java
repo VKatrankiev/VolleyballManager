@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.FragmentOne;
 import com.example.user1.volleyballmanager20.cmn.Player;
+import com.example.user1.volleyballmanager20.cmn.Team;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -118,6 +119,11 @@ public class MainActivity extends AppCompatActivity {
                             if (user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
                                     user1.getPassword().equals(String.valueOf(edtPass.getText()))) {
                                 demoUser = user1;
+                                if(demoUser.getTeam().getAllPlayers()==null){
+                                    demoUser.getTeam().setAllPlayers(new ArrayList<Player>());
+                                    demoUser.getTeam().setStartingList(new ArrayList<Player>());
+                                    demoUser.getTeam().setCaptain(new Player());
+                                }
                                 Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
                                 Log.e("uu", user1.getUserName());
                                 //i.putExtra("userTag", user1);
