@@ -1,7 +1,6 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +13,8 @@ import android.widget.TextView;
 import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.Player;
 import com.example.user1.volleyballmanager20.cmn.Team;
-import com.example.user1.volleyballmanager20.cmn.TeamAdapter;
-import com.firebase.client.ChildEventListener;
+import com.example.user1.volleyballmanager20.Adapters.TeamAdapter;
+import com.example.user1.volleyballmanager20.cmn.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;

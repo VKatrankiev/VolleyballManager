@@ -16,4 +16,20 @@
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:background="@android:drawable/ic_menu_revert" />
+    <Button
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/btn_screenshot"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@android:drawable/ic_menu_camera"
+        />
+    <Button
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/btn_see_all_screenshots"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:drawable/ic_menu_gallery"
+        />
 </RelativeLayout>
