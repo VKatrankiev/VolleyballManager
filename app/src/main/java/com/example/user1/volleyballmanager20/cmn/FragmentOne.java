@@ -1,15 +1,16 @@
 package com.example.user1.volleyballmanager20.cmn;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.user1.volleyballmanager20.Adapters.CustomAdapter;
 import com.example.user1.volleyballmanager20.MainActivity;
 import com.example.user1.volleyballmanager20.R;
 
@@ -18,9 +19,10 @@ import java.util.ArrayList;
 /**
  * Created by user1 on 26.6.2016 г..
  */
-public class FragmentOne extends Fragment {
+public class FragmentOne extends DialogFragment {
     private static final String TAG = "RecyclerViewFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
+    public static Context context;
 
     private enum LayoutManagerType {
         LINEAR_LAYOUT_MANAGER
@@ -44,11 +46,13 @@ public class FragmentOne extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        context = getContext();
         players = new ArrayList<>();
         players = MainActivity.players;
         View rootView = inflater.inflate(R.layout.search_players, container, false);
         rootView.setTag(TAG);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+
 
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how

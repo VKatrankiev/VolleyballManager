@@ -1,7 +1,6 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +13,8 @@ import android.widget.TextView;
 import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.Player;
 import com.example.user1.volleyballmanager20.cmn.Team;
-import com.example.user1.volleyballmanager20.cmn.TeamAdapter;
-import com.firebase.client.ChildEventListener;
+import com.example.user1.volleyballmanager20.Adapters.TeamAdapter;
+import com.example.user1.volleyballmanager20.cmn.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -32,7 +31,7 @@ public class LoggedInActivity extends AppCompatActivity {
     protected TeamAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
 
-    static Team loggedTeam;
+    public static Team loggedTeam;
 
     TextView txtTeamNameLoggedIn;
     String teamName;
@@ -64,7 +63,7 @@ public class LoggedInActivity extends AppCompatActivity {
         if (MainActivity.demoUser!=null) {
             userLogged = MainActivity.demoUser;
         }
-        teamName = userLogged.getTeam().getName();
+        teamName = userLogged.getTeamName();
         txtTeamNameLoggedIn.setText(teamName);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -76,10 +75,7 @@ public class LoggedInActivity extends AppCompatActivity {
             mRecyclerView.setAdapter(mAdapter);
         } else {
             loggedTeam = new Team();
-            loggedTeam.setStartingList(new ArrayList<Player>());
-            loggedTeam.setCaptain(new Player());
             loggedTeam.setAllPlayers(new ArrayList<Player>());
-            loggedTeam.setName(teamName);
             Log.e("hello", "nope im here");
         }
 
@@ -91,7 +87,7 @@ public class LoggedInActivity extends AppCompatActivity {
         if (MainActivity.demoUser != null) {
             userLogged = MainActivity.demoUser;
         }
-        teamName = userLogged.getTeam().getName();
+        teamName = userLogged.getTeamName();
         txtTeamNameLoggedIn.setText(teamName);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());

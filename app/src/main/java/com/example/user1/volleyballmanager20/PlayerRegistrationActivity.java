@@ -1,7 +1,6 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import com.example.user1.volleyballmanager20.cmn.Config;
 import com.example.user1.volleyballmanager20.cmn.FragmentOne;
 import com.example.user1.volleyballmanager20.cmn.Player;
+import com.example.user1.volleyballmanager20.cmn.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;

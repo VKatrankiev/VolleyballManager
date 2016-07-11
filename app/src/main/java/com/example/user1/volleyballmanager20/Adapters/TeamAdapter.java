@@ -1,4 +1,4 @@
-package com.example.user1.volleyballmanager20.cmn;
+package com.example.user1.volleyballmanager20.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.user1.volleyballmanager20.R;
-
-import java.util.ArrayList;
+import com.example.user1.volleyballmanager20.cmn.Player;
+import com.example.user1.volleyballmanager20.cmn.Team;
 
 
 /**
@@ -73,18 +73,17 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
         Player currentPlayer = team.getAllPlayers().get(position);
 
         holder.playerName.setText(currentPlayer.getName());
-
-        if (team.getStartingList() == null) {
+        if (currentPlayer.isTitular() == false) {
             holder.playerTitular.setText("");
         } else {
-            if (team.getStartingList().contains(currentPlayer)) {
+            if (currentPlayer.isTitular()==true) {
                 holder.playerTitular.setText("T");
             } else {
                 holder.playerTitular.setText("");
             }
         }
         holder.playerPosition.setText(currentPlayer.getPosition());
-        if (team.getCaptain().equals(currentPlayer)) {
+        if (currentPlayer.isCaptain() == true) {
             holder.playerCaptain.setText("C");
         } else {
             holder.playerCaptain.setText("");
