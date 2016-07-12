@@ -88,6 +88,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                                 if (adapterPlayer.getName().equals(playerName.getText()) && adapterPlayer.isTaken() == false) {
                                     adapterTeam.add(adapterPlayer);
                                     LoggedInActivity.loggedTeam.getAllPlayers().add(adapterPlayer);
+                                    adapterPlayer.setTaken(true);
                                 } else {
                                     Toast.makeText(FragmentOne.context, "Player already taken!", Toast.LENGTH_LONG).show();
                                 }
