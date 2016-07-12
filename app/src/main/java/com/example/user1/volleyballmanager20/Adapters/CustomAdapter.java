@@ -1,9 +1,6 @@
-package com.example.user1.volleyballmanager20.cmn;
+package com.example.user1.volleyballmanager20.Adapters;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +13,8 @@ import android.widget.Toast;
 import com.example.user1.volleyballmanager20.LoggedInActivity;
 import com.example.user1.volleyballmanager20.MainActivity;
 import com.example.user1.volleyballmanager20.R;
+import com.example.user1.volleyballmanager20.cmn.FragmentOne;
+import com.example.user1.volleyballmanager20.cmn.Player;
 
 import java.util.ArrayList;
 

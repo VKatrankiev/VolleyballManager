@@ -1,4 +1,4 @@
-package com.example.user1.volleyballmanager20;
+package com.example.user1.volleyballmanager20.cmn;
 
 import android.content.Context;
 import android.os.Parcel;

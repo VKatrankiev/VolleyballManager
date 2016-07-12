@@ -1,4 +1,4 @@
-package com.example.user1.volleyballmanager20.cmn;
+package com.example.user1.volleyballmanager20.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.user1.volleyballmanager20.R;
-
-import java.util.ArrayList;
+import com.example.user1.volleyballmanager20.cmn.Player;
+import com.example.user1.volleyballmanager20.cmn.Team;
 
 
 /**
