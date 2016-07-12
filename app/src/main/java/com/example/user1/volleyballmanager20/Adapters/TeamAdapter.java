@@ -1,15 +1,23 @@
 package com.example.user1.volleyballmanager20.Adapters;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.user1.volleyballmanager20.LoggedInActivity;
+import com.example.user1.volleyballmanager20.MainActivity;
 import com.example.user1.volleyballmanager20.R;
+import com.example.user1.volleyballmanager20.cmn.FragmentOne;
 import com.example.user1.volleyballmanager20.cmn.Player;
 import com.example.user1.volleyballmanager20.cmn.Team;
+
+import java.util.ArrayList;
 
 
 /**
@@ -23,7 +31,6 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
         private final TextView playerName;
         private final TextView playerTitular;
         private final TextView playerPosition;
-        ;
         private final TextView playerCaptain;
 
 
@@ -54,6 +61,8 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
         }
 
     }
+
+
 
     public TeamAdapter(Team team) {
         this.team = team;

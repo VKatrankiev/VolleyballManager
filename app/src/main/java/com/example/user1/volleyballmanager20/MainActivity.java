@@ -1,12 +1,16 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     Button btnLogin;
     public static boolean isLogged = false;
+    Animation animFadein;
 
     public static ArrayList<Player> players;
     public static User demoUser;
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         players = new ArrayList<>();
         Firebase.setAndroidContext(this);
         final Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
+
         if (!flag) {
             rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -74,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         btnReg = (Button) findViewById(R.id.btn_reg);
         btnSearch = (Button) findViewById(R.id.btn_search);
         btnLogin = (Button) findViewById(R.id.btn_login);
+        View v = findViewById(R.id.main_layout);
+        animFadein = AnimationUtils.loadAnimation(this,R.anim.fade_in);
+        v.startAnimation(animFadein);
 
 
         btnReg.setOnClickListener(new View.OnClickListener() {

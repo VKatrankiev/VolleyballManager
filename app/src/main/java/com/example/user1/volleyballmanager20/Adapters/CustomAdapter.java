@@ -15,6 +15,7 @@ import com.example.user1.volleyballmanager20.MainActivity;
 import com.example.user1.volleyballmanager20.R;
 import com.example.user1.volleyballmanager20.cmn.FragmentOne;
 import com.example.user1.volleyballmanager20.cmn.Player;
+import com.example.user1.volleyballmanager20.cmn.Team;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
 
     private ArrayList<Player> players;
-    static ArrayList<Player> adapterTeam;
+    static Team adapterTeam ;
     static Player adapterPlayer;
 
     /**
@@ -70,13 +71,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             Log.e("pesho", (String) playerName.getText());
+                if(adapterTeam.getAllPlayers() == null){
+                    adapterTeam = new Team();
 
-                adapterTeam = new ArrayList<>();
                 adapterPlayer = new Player();
-                for (Player player : adapterTeam) {
+                for (Player player : adapterTeam.getAllPlayers()) {
                     if (player.getName().equals(playerName.getText()) && player.getPosition().equals(playerPosition.getText())) {
                         adapterPlayer = player;
                     }
+                }
                 }
             if (MainActivity.isLogged == true) {
                 new AlertDialog.Builder(FragmentOne.context)
@@ -84,12 +87,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                         .setMessage("You are attempting to get player " + "\"" + playerName.getText() + "\"" + " in your team")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                if (adapterPlayer.getName().equals(playerName.getText()) && adapterPlayer.isTaken() == false) {
-                                    adapterTeam.add(adapterPlayer);
-                                    LoggedInActivity.loggedTeam.getAllPlayers().add(adapterPlayer);
-                                    adapterPlayer.setTaken(true);
-                                } else {
-                                    Toast.makeText(FragmentOne.context, "Player already taken!", Toast.LENGTH_LONG).show();
+                                if (adapterTeam.getAllPlayers().isEmpty()) {
+                                    adapterTeam = new Team();
+
+                                    if (adapterPlayer.getName().equals(playerName.getText()) && adapterPlayer.isTaken() == false) {
+                                        adapterTeam.getAllPlayers().add(adapterPlayer);
+//                                    adapterTeam.add(adapterPlayer);
+//                                    LoggedInActivity.loggedTeam.getAllPlayers().add(adapterPlayer);
+                                        adapterPlayer.setTaken(true);
+                                    } else {
+                                        Toast.makeText(FragmentOne.context, "Player already taken!", Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             }
                         })
@@ -103,6 +111,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             }else{
                 Toast.makeText(FragmentOne.context,"You must login first!",Toast.LENGTH_LONG);
             }
+
         }
     }
     /**
