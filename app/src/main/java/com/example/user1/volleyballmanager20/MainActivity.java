@@ -95,24 +95,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-//                                User vladi = new User();
-//                vladi.setsName("ivanov");
-//                vladi.setfName("pesho");
-//                vladi.setEmail("jsdfjdfj@abv.bg", MainActivity.this);
-//                vladi.setTeam(new Team());
-//                vladi.setPassword("12345");
-//                vladi.setUserName("The Something D");
-//                Intent intent = new Intent(MainActivity.this, LoggedInActivity.class);
-//                intent.putExtra("user", vladi);
-//                startActivity(intent);
-            }
-        });
-
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
             Boolean loggedIn = false;
 
             Firebase ref = new Firebase(Config.FIREBASE_URL);
@@ -140,8 +122,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
                                 Log.e("uu", user1.getUserName());
-                                //i.putExtra("userTag", user1);
-                                //i.putParcelableArrayListExtra("captain",user1.getTeam().getAllPlayers());                               Log.e("az124",user1.getTeam().getCaptain().getName());
                                 loggedIn = true;
                                 startActivity(i);
                                 Toast.makeText(MainActivity.this, "da", Toast.LENGTH_LONG).show();

@@ -1,6 +1,7 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -22,15 +23,18 @@ import java.util.ArrayList;
 
 public class GalleryActivity extends AppCompatActivity {
 
-    private ArrayList<Bitmap> bitmapList;
+    public static ArrayList<Bitmap> bitmapList;
     DBUtils dbUtils;
     SQLiteDatabase db;
+    public static ArrayList<String> bitmapStrings;
+    public static String loadedBitmap;
     Button btnEraseAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+
         dbUtils = DBUtils.getInstance(this);
         db = this.openOrCreateDatabase("image_storage.db", Context.MODE_PRIVATE, null);
         db.execSQL("create table if not exists tb (a blob)");
@@ -41,17 +45,22 @@ public class GalleryActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(GalleryActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
+                loadedBitmap = bitmapStrings.get(position);
+                startActivity(new Intent (GalleryActivity.this, SinglePictureActivity.class));
+
             }
         });
 
     }
+
     private void readDB() {
         bitmapList = new ArrayList<>();
+        bitmapStrings = new ArrayList<>();
         Cursor cursor = dbUtils.readPhotos();
         if (cursor.moveToFirst()) {
             do {
+
+                bitmapStrings.add(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PICTURE)));
                 Bitmap tempBitmap = stringToBitMap(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PICTURE)));
                 bitmapList.add(tempBitmap);
             } while (cursor.moveToNext());

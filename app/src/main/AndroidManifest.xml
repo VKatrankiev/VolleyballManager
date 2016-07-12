@@ -23,7 +23,8 @@
         <activity
             android:name=".TacticsActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".GalleryActivity"></activity>
+        <activity android:name=".GalleryActivity" />
+        <activity android:name=".SinglePictureActivity"></activity>
     </application>
 
 </manifest>

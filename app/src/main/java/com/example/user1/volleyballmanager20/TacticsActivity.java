@@ -13,6 +13,7 @@ import com.example.user1.volleyballmanager20.cmn.DrawingView;
 
 public class TacticsActivity extends Activity implements View.OnClickListener {
 
+    public static boolean hasExternalPicture;
     private DrawingView drawView;
     private Button btnUndo;
     private Button btnTakeShot;

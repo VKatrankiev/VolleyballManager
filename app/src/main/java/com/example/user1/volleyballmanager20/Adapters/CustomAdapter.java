@@ -1,6 +1,7 @@
 package com.example.user1.volleyballmanager20.Adapters;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,8 +27,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private static final String TAG = "CustomAdapter";
 
 
-    private ArrayList<Player> players;
-    static Team adapterTeam ;
+    private static ArrayList<Player> players;
     static Player adapterPlayer;
 
     /**
@@ -42,18 +42,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         public ViewHolder(View v) {
             super(v);
-            // Define click listener for the ViewHolder's View.
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
-                }
-            });
             playerName = (TextView) v.findViewById(R.id.player_name);
             playerHeight = (TextView) v.findViewById(R.id.player_height);
             playerPosition = (TextView) v.findViewById(R.id.player_position);
             playerAge = (TextView) v.findViewById(R.id.player_age);
-            playerName.setOnClickListener(this);
+
             v.setOnClickListener(this);
 
         }
@@ -61,40 +54,53 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         public TextView getPlayerName() {
             return playerName;
         }
+
         public TextView getPlayerHeight() {
             return playerHeight;
         }
+
         public TextView getPlayerPosition() {
             return playerPosition;
         }
 
         @Override
         public void onClick(View v) {
-            Log.e("pesho", (String) playerName.getText());
-                if(adapterTeam.getAllPlayers() == null){
-                    adapterTeam = new Team();
 
-                adapterPlayer = new Player();
-                for (Player player : adapterTeam.getAllPlayers()) {
-                    if (player.getName().equals(playerName.getText()) && player.getPosition().equals(playerPosition.getText())) {
+            adapterPlayer = new Player();
+            adapterPlayer.setAge(Integer.valueOf(String.valueOf(playerAge.getText())));
+            adapterPlayer.setName(String.valueOf(playerName.getText()));
+            adapterPlayer.setPosition(String.valueOf(playerPosition.getText()));
+            adapterPlayer.setHeight(Integer.valueOf(String.valueOf(playerHeight.getText())));
+
+            if (players != null) {
+                for (Player player : players) {
+                    if (player.getName().equals(adapterPlayer.getName()) && player.getAge() == adapterPlayer.getAge()) {
                         adapterPlayer = player;
+                        break;
                     }
                 }
-                }
+            }
+            if (LoggedInActivity.loggedTeam == null || LoggedInActivity.loggedTeam.getAllPlayers() == null) {
+                LoggedInActivity.loggedTeam = new Team();
+                LoggedInActivity.loggedTeam.setAllPlayers(new ArrayList<Player>());
+            }
+
             if (MainActivity.isLogged == true) {
                 new AlertDialog.Builder(FragmentOne.context)
                         .setTitle("Are you sure?")
                         .setMessage("You are attempting to get player " + "\"" + playerName.getText() + "\"" + " in your team")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                if (adapterTeam.getAllPlayers().isEmpty()) {
-                                    adapterTeam = new Team();
+                                if (LoggedInActivity.loggedTeam == null || LoggedInActivity.loggedTeam.getAllPlayers().isEmpty()) {
+                                    LoggedInActivity.loggedTeam = new Team();
+                                    LoggedInActivity.loggedTeam.setAllPlayers(new ArrayList<Player>());
 
-                                    if (adapterPlayer.getName().equals(playerName.getText()) && adapterPlayer.isTaken() == false) {
-                                        adapterTeam.getAllPlayers().add(adapterPlayer);
-//                                    adapterTeam.add(adapterPlayer);
-//                                    LoggedInActivity.loggedTeam.getAllPlayers().add(adapterPlayer);
+                                    if (adapterPlayer.isTaken() == false) {
                                         adapterPlayer.setTaken(true);
+                                        LoggedInActivity.loggedTeam.getAllPlayers().add(adapterPlayer);
+                                        for (Player player : LoggedInActivity.loggedTeam.getAllPlayers())
+                                            Log.d("player123", player.getName());
+
                                     } else {
                                         Toast.makeText(FragmentOne.context, "Player already taken!", Toast.LENGTH_LONG).show();
                                     }
@@ -108,12 +114,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                         })
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
-            }else{
-                Toast.makeText(FragmentOne.context,"You must login first!",Toast.LENGTH_LONG);
+            } else {
+                Toast.makeText(FragmentOne.context, "You must login first!", Toast.LENGTH_LONG);
             }
 
         }
     }
+
     /**
      * Initialize the dataset of the Adapter.
      *
@@ -123,7 +130,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         this.players = players;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public CustomAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
@@ -132,7 +138,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         return new ViewHolder(v);
     }
-
 
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -144,7 +149,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         viewHolder.playerHeight.setText(String.valueOf(currentPlayer.getHeight()));
         viewHolder.playerPosition.setText(currentPlayer.getPosition());
         viewHolder.playerAge.setText(String.valueOf(currentPlayer.getAge()));
-
 
 
     }

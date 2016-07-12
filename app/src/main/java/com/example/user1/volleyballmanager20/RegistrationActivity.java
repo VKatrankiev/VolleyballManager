@@ -58,7 +58,6 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
 
-        //btnRegister = (Button) loginDialog.findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
             Firebase ref = new Firebase(Config.FIREBASE_URL);
@@ -79,19 +78,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String email = edtEmail.getText().toString().trim();
                 String teamName = edtTeam.getText().toString().trim();
 
-//                Player pl = new Player();
-//                pl.setName("ivan");
-//                pl.setAge(12);
-//                pl.setHeight(130);
-//                pl.setPosition("MB");
-//                Player pl1 = new Player();
-//                pl1.setAge(13);
-//                pl1.setPosition("O");
-//                pl1.setName("gosho");
-//                pl1.setHeight(199);
-//                ArrayList<Player> nekvi = new ArrayList<>();
-//                nekvi.add(pl);
-//                nekvi.add(pl1);
+
 
                 Team team = new Team();
                 team.setAllPlayers(new ArrayList<Player>());
