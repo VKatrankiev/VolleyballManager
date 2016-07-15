@@ -11,12 +11,14 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="20sp"
+
         android:id="@+id/txt_player_name_loggedin" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+
         android:textSize="20sp"
         android:id="@+id/txt_player_position_loggedin" />
 
@@ -24,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+
         android:textSize="20sp"
         android:id="@+id/txt_player_captain_loggedin" />
 
@@ -32,6 +35,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="20sp"
+
         android:id="@+id/txt_player_titular_loggedin" />
 
 </LinearLayout>

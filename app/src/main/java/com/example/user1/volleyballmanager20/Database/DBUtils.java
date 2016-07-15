@@ -29,6 +29,10 @@ public class DBUtils {
         return instance;
     }
 
+    public void deletePhoto(Bitmap bitmap){
+        db.deletePhoto(bitmap);
+    }
+
     public void writePhoto(Bitmap bitmap){
         db.insertPhoto(bitmap);
     }

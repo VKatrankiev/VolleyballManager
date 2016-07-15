@@ -12,6 +12,20 @@ import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
 /**
+ package com.example.user1.volleyballmanager20.Database;
+
+ import android.content.ContentValues;
+ import android.content.Context;
+ import android.database.Cursor;
+ import android.database.sqlite.SQLiteDatabase;
+ import android.database.sqlite.SQLiteOpenHelper;
+ import android.graphics.Bitmap;
+ import android.graphics.BitmapFactory;
+ import android.util.Base64;
+
+ import java.io.ByteArrayOutputStream;
+
+ /**
  * Created by user1 on 10.7.2016 г..
  */
 public class DBHelper extends SQLiteOpenHelper {
@@ -41,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean insertPhoto(Bitmap bitmap){
         SQLiteDatabase db = getWritableDatabase();
-        String bitmapStr = BitMapToString(bitmap);
+        String bitmapStr = bitMapToString(bitmap);
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_PICTURE, bitmapStr);
         db.insert(TABLE_PHOTOS, null, contentValues);
@@ -52,21 +66,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.query(TABLE_PHOTOS, new String[]{KEY_PICTURE}, null, null, null, null, null);
     }
 
-//    public boolean updatePhoto(Bitmap bitmap, int id){
-//        String bitmapStr = BitMapToString(bitmap);
-//        SQLiteDatabase db = getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        db.update(TABLE_PHOTOS, contentValues, KEY_ID + " = ? ", new String[] { Integer.toString(id) } );
-//        return true;
-//    }
-    public Integer deletePhoto(Integer id) {
+
+    public void deletePhoto(Bitmap bitmap) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_PHOTOS,
-                KEY_ID + " = ? ",
-                new String[] { Integer.toString(id) });
+        String str = bitMapToString(bitmap);
+        db.delete(TABLE_PHOTOS, KEY_PICTURE + "=" + str, null);
     }
 
-    public String BitMapToString(Bitmap bitmap){
+    public String bitMapToString(Bitmap bitmap){
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
         byte [] b=baos.toByteArray();

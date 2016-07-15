@@ -31,11 +31,11 @@ public class LoggedInActivity extends AppCompatActivity {
     protected TeamAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
 
-    public static Team loggedTeam;
-
     TextView txtTeamNameLoggedIn;
     String teamName;
-    User userLogged;
+
+    public static User userLogged;
+    public static Team loggedTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +58,13 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(new Intent(LoggedInActivity.this, PlayerRegistrationActivity.class));
             }
         });
-
-        userLogged = new User();
-        if (MainActivity.demoUser!=null) {
-            userLogged = MainActivity.demoUser;
+        if (userLogged == null) {
+            userLogged = new User();
+            if (MainActivity.demoUser != null) {
+                userLogged = MainActivity.demoUser;
+            }
         }
+
         teamName = userLogged.getTeamName();
         txtTeamNameLoggedIn.setText(teamName);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -84,37 +86,34 @@ public class LoggedInActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (MainActivity.demoUser != null) {
-            userLogged = MainActivity.demoUser;
-        }
+
         teamName = userLogged.getTeamName();
         txtTeamNameLoggedIn.setText(teamName);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        if (userLogged.getTeam().getAllPlayers() != null) {
-            loggedTeam = userLogged.getTeam();
-            mAdapter = new TeamAdapter(userLogged.getTeam());
-            mRecyclerView.setAdapter(mAdapter);
-            Log.e("cmon", "in the onresume if");
-        } else {
-            loggedTeam = new Team();
-            Log.e("cmon", "in the onresume else");
-        }
+        userLogged.setTeam(loggedTeam);
+        mAdapter = new TeamAdapter(userLogged.getTeam());
+        mRecyclerView.setAdapter(mAdapter);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
         if (!userLogged.getTeam().getAllPlayers().equals(MainActivity.demoUser.getTeam().getAllPlayers())) {
+            final String[] key = new String[1];
             Firebase ref = new Firebase(Config.FIREBASE_USERS_URL);
+
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot shot : dataSnapshot.getChildren()) {
                         User tempUser = shot.getValue(User.class);
                         if (tempUser.getUserName().equals(MainActivity.demoUser.getUserName())) {
-                            shot.getRef().setValue(MainActivity.demoUser);
+                            key[0] = shot.getKey();
+                            break;
                         }
                     }
                 }
@@ -124,6 +123,7 @@ public class LoggedInActivity extends AppCompatActivity {
 
                 }
             });
+            ref.child(key[0]).setValue(userLogged);
         }
     }
 }

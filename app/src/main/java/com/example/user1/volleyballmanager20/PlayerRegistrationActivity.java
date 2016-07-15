@@ -64,30 +64,13 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
                 player.setAge(age);
                 if (player.isPositionCorrect(position)) {
                     player.setPosition(position);
-                    rootRef.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                User tempUser = snapshot.getValue(User.class);
-                                if(tempUser.getUserName().equals(MainActivity.demoUser.getUserName())){
-                                    tempUser.getTeam().addPlayer(player);
-                                    MainActivity.demoUser.getTeam().addPlayer(player);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-
-                        }
-                    });
-                    rootRef.push().setValue(player);
                     LoggedInActivity.loggedTeam.addPlayer(player);
-                    MainActivity.demoUser.getTeam().addPlayer(player);
+                    rootRef.push().setValue(player);
+                    startActivity(new Intent(PlayerRegistrationActivity.this, LoggedInActivity.class));
                 } else {
                     Toast.makeText(PlayerRegistrationActivity.this, "Incorrect position!", Toast.LENGTH_LONG);
                 }
-                startActivity(new Intent(PlayerRegistrationActivity.this, LoggedInActivity.class));
+
             }
         });
 
