@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,11 +30,17 @@ public class TacticsActivity extends Activity implements View.OnClickListener {
         btnGallery = (Button) findViewById(R.id.btn_see_all_screenshots);
         btnUndo = (Button) findViewById(R.id.btn_undo);
         drawView = (DrawingView) findViewById(R.id.drawing);
-
-        drawView.setBackgroundResource(R.drawable.volleyball_court_original);
+        if (hasExternalPicture) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                drawView.setBackground(SinglePictureActivity.loadOnTactics);
+            }
+        } else {
+            drawView.setBackgroundResource(R.drawable.volleyball_court_original);
+        }
         btnUndo.setOnClickListener(this);
         btnGallery.setOnClickListener(this);
         btnTakeShot.setOnClickListener(this);
+
 
     }
 
@@ -69,7 +76,8 @@ public class TacticsActivity extends Activity implements View.OnClickListener {
         rootView.draw(canvas);
         return bitmap;
     }
-    public void saveScreenshot(){
+
+    public void saveScreenshot() {
         Bitmap bitmap = takeScreenshot();
         dbUtils = DBUtils.getInstance(TacticsActivity.this);
         dbUtils.writePhoto(bitmap);

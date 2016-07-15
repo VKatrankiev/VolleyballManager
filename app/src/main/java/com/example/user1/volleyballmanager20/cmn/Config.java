@@ -12,5 +12,5 @@ public class Config {
     public static final String OUTSIDE_HITTER = "OH";
     public static final String LIBERO = "L";
     public static final String MIDDLE_BLOCKER = "MB";
-
+    public static final String FIREBASE_TEAMS ="https://volleyballmanager-7832a.firebaseio.com/Teams" ;
 }

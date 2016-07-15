@@ -18,7 +18,6 @@ public class User {
     private String sName;
     private String email;
     private String password;
-    private Team team;
     private String teamName;
 
 
@@ -39,7 +38,6 @@ public class User {
         this.sName = sName;
         this.fName = fName;
         this.password = password;
-        this.team = team;
         this.teamName = teamName;
     }
 
@@ -57,15 +55,6 @@ public class User {
 
     public void setfName(String fName) {
         this.fName = fName;
-    }
-
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
     }
 
     public String getPassword() {

@@ -23,7 +23,7 @@ public class SinglePictureActivity extends AppCompatActivity implements View.OnC
     Button btnErase;
     Button btnSendBack;
     DBUtils dbUtils;
-    public static Bitmap loadOnTactics;
+    public static Drawable loadOnTactics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class SinglePictureActivity extends AppCompatActivity implements View.OnC
         imgPic = (ImageView) findViewById(R.id.single_picture);
         btnErase = (Button) findViewById(R.id.btn_erase);
         btnSendBack = (Button) findViewById(R.id.btn_load_on_tactics);
-        Drawable d = new BitmapDrawable(getResources(), GalleryActivity.loadedBitmap);
 
+        Drawable d = new BitmapDrawable(getResources(), GalleryActivity.loadedBitmap);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             imgPic.setBackground(d);
         }
@@ -44,8 +44,8 @@ public class SinglePictureActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btn_erase:{
+        switch (view.getId()) {
+            case R.id.btn_erase: {
                 deletePic();
                 break;
             }
@@ -58,27 +58,16 @@ public class SinglePictureActivity extends AppCompatActivity implements View.OnC
     }
 
     private void loadOnTactics() {
-        imgPic.buildDrawingCache();
-        loadOnTactics = imgPic.getDrawingCache();
+        loadOnTactics = new BitmapDrawable(getResources(), GalleryActivity.loadedBitmap);
         TacticsActivity.hasExternalPicture = true;
         startActivity(new Intent(SinglePictureActivity.this, TacticsActivity.class));
     }
 
     private void deletePic() {
         dbUtils = DBUtils.getInstance(SinglePictureActivity.this);
-        imgPic.buildDrawingCache();
-        Bitmap bmap = imgPic.getDrawingCache();
-        GalleryActivity.bitmapList.remove(bmap);
-        GalleryActivity.bitmapStrings.remove(getEncoded64ImageStringFromBitmap(bmap));
-        dbUtils.deletePhoto(bmap);
-    }
-    public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
-        byte[] byteFormat = stream.toByteArray();
-        // get the base 64 string
-        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
-        return imgString;
+        GalleryActivity.bitmapList.remove(GalleryActivity.loadedBitmap);
+        dbUtils.deletePhoto(GalleryActivity.loadedBitmap);
+        startActivity(new Intent(SinglePictureActivity.this, GalleryActivity.class));
     }
 }
 

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class PlayerRegistrationActivity extends AppCompatActivity {
 
-    public static ArrayList<Player> players;
+   // public static ArrayList<Player> allPlayers;
     EditText edtName;
     EditText edtHeight;
     EditText edtPosition;
@@ -42,7 +42,7 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        players = new ArrayList<>();
+//        allPlayers = new ArrayList<>();
         edtName = (EditText) findViewById(R.id.player_name_register);
         edtHeight = (EditText) findViewById(R.id.player_height_register);
         edtPosition = (EditText) findViewById(R.id.player_position_register);
@@ -53,41 +53,44 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 String name = String.valueOf(edtName.getText());
                 String position = String.valueOf(edtPosition.getText());
                 int height = Integer.parseInt(edtHeight.getText().toString());
                 int age = Integer.parseInt(edtAge.getText().toString());
-                final Player player = new Player();
+                Player player = new Player();
                 player.setHeight(height);
                 player.setName(name);
                 player.setAge(age);
+                player.setTitular(false);
+                player.setTaken(true);
+                player.setCaptain(false);
                 if (player.isPositionCorrect(position)) {
                     player.setPosition(position);
-                    LoggedInActivity.loggedTeam.addPlayer(player);
+                    LoggedInActivity.loggedTeam.getAllPlayers().add(player);
                     rootRef.push().setValue(player);
                     startActivity(new Intent(PlayerRegistrationActivity.this, LoggedInActivity.class));
                 } else {
-                    Toast.makeText(PlayerRegistrationActivity.this, "Incorrect position!", Toast.LENGTH_LONG);
+                    Toast.makeText(PlayerRegistrationActivity.this, "Incorrect position!", Toast.LENGTH_LONG).show();
                 }
 
             }
         });
 
-        rootRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Player player = postSnapshot.getValue(Player.class);
-                    players.add(player);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });
+//        rootRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                allPlayers = new ArrayList<>();
+//                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+//                    Player player = postSnapshot.getValue(Player.class);
+//                    allPlayers.add(player);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(FirebaseError firebaseError) {
+//                System.out.println("The read failed: " + firebaseError.getMessage());
+//            }
+//        });
     }
 
 

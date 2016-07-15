@@ -43,7 +43,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     // create a new ImageView for each item referenced by the Adapter
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
@@ -53,7 +53,9 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setBackground(new BitmapDrawable(bitmaps.get(position)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            imageView.setBackground(new BitmapDrawable(bitmaps.get(position)));
+        }
         return imageView;
     }
 }

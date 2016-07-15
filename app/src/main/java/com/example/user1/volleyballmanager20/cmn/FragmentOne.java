@@ -30,8 +30,6 @@ public class FragmentOne extends DialogFragment {
 
     protected LayoutManagerType mCurrentLayoutManagerType;
 
-
-
     protected RecyclerView mRecyclerView;
     protected CustomAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
