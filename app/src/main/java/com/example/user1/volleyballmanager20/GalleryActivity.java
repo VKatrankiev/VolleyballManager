@@ -26,9 +26,7 @@ public class GalleryActivity extends AppCompatActivity {
     public static ArrayList<Bitmap> bitmapList;
     DBUtils dbUtils;
     SQLiteDatabase db;
-    public static ArrayList<String> bitmapStrings;
-    public static String loadedBitmap;
-    Button btnEraseAll;
+    public static Bitmap loadedBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public class GalleryActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                loadedBitmap = bitmapStrings.get(position);
+                loadedBitmap = bitmapList.get(position);
                 startActivity(new Intent (GalleryActivity.this, SinglePictureActivity.class));
 
             }
@@ -55,12 +53,9 @@ public class GalleryActivity extends AppCompatActivity {
 
     private void readDB() {
         bitmapList = new ArrayList<>();
-        bitmapStrings = new ArrayList<>();
         Cursor cursor = dbUtils.readPhotos();
         if (cursor.moveToFirst()) {
             do {
-
-                bitmapStrings.add(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PICTURE)));
                 Bitmap tempBitmap = stringToBitMap(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PICTURE)));
                 bitmapList.add(tempBitmap);
             } while (cursor.moveToNext());

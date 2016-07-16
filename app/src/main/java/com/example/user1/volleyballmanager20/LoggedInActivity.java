@@ -1,6 +1,7 @@
 package com.example.user1.volleyballmanager20;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,8 +35,9 @@ public class LoggedInActivity extends AppCompatActivity {
     TextView txtTeamNameLoggedIn;
     String teamName;
 
-    public static User userLogged;
+    public static User loggedUser;
     public static Team loggedTeam;
+    private static boolean alreadyInit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,19 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(new Intent(LoggedInActivity.this, TacticsActivity.class));
             }
         });
+        if (loggedTeam == null) {
+            Log.d("damn23", "damn");
+            loggedTeam = new Team();
+            loggedTeam.setTeamName(teamName);
+            loggedTeam.setAllPlayers(new ArrayList<Player>());
+        }
+        if (loggedUser == null) {
+            loggedUser = new User();
+            if (MainActivity.demoUser != null) {
+
+                loggedUser = MainActivity.demoUser;
+            }
+        }
 
         btnAddPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,61 +73,28 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(new Intent(LoggedInActivity.this, PlayerRegistrationActivity.class));
             }
         });
-        if (userLogged == null) {
-            userLogged = new User();
-            if (MainActivity.demoUser != null) {
-                userLogged = MainActivity.demoUser;
-            }
-        }
 
-        teamName = userLogged.getTeamName();
+
+        teamName = loggedUser.getTeamName();
         txtTeamNameLoggedIn.setText(teamName);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        if (!(userLogged.getTeam().getAllPlayers() == null)) {
-            Log.e("hello", "im here");
-            loggedTeam = userLogged.getTeam();
-            mAdapter = new TeamAdapter(userLogged.getTeam());
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            loggedTeam = new Team();
-            loggedTeam.setAllPlayers(new ArrayList<Player>());
-            Log.e("hello", "nope im here");
-        }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        teamName = userLogged.getTeamName();
-        txtTeamNameLoggedIn.setText(teamName);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        userLogged.setTeam(loggedTeam);
-        mAdapter = new TeamAdapter(userLogged.getTeam());
-        mRecyclerView.setAdapter(mAdapter);
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (!userLogged.getTeam().getAllPlayers().equals(MainActivity.demoUser.getTeam().getAllPlayers())) {
-            final String[] key = new String[1];
-            Firebase ref = new Firebase(Config.FIREBASE_USERS_URL);
-
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        Firebase.setAndroidContext(this);
+        Firebase teamRef = new Firebase(Config.FIREBASE_TEAMS);
+        if (!alreadyInit) {
+            alreadyInit = true;
+            teamRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot shot : dataSnapshot.getChildren()) {
-                        User tempUser = shot.getValue(User.class);
-                        if (tempUser.getUserName().equals(MainActivity.demoUser.getUserName())) {
-                            key[0] = shot.getKey();
+                    Log.d("damn123", "damn2");
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (snapshot.child("teamName").getValue().equals(teamName)) {
+                            Log.d("damn123", "damn3");
+                            loggedTeam = snapshot.getValue(Team.class);
+                            if (loggedTeam.getAllPlayers() == null) {
+                                loggedTeam.setAllPlayers(new ArrayList<Player>());
+                            }
                             break;
                         }
                     }
@@ -123,7 +105,47 @@ public class LoggedInActivity extends AppCompatActivity {
 
                 }
             });
-            ref.child(key[0]).setValue(userLogged);
         }
+
+        mAdapter = new TeamAdapter(loggedTeam);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdapter = new TeamAdapter(loggedTeam);
+        mRecyclerView.setAdapter(mAdapter);
+        Log.d("player count", String.valueOf(loggedTeam.getAllPlayers().size()));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Firebase.setAndroidContext(this);
+        final Firebase teamsRoot = new Firebase(Config.FIREBASE_TEAMS);
+        teamsRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Firebase targetRef;
+                boolean noTeam = true;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("teamName").getValue().equals(loggedTeam.getTeamName())) {
+                        targetRef = snapshot.getRef();
+                        targetRef.setValue(loggedTeam);
+                        noTeam = false;
+                        break;
+                    }
+                }
+                if (noTeam) {
+                    teamsRoot.child(teamName).setValue(loggedTeam);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 }

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Log.e("players count", String.valueOf(dataSnapshot.getChildrenCount()));
+                        Log.e("playersk count", String.valueOf(dataSnapshot.getChildrenCount()));
                         Player player = postSnapshot.getValue(Player.class);
                         players.add(player);
                     }
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
             });
             flag = true;
         }
-        //Toast.makeText(MainActivity.this, players.get(0).getName(), Toast.LENGTH_SHORT).show();
 
         edtUserName = (EditText) findViewById(R.id.edtxt_us);
         edtPass = (EditText) findViewById(R.id.edtxt_pass);
@@ -101,35 +100,31 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-
-
+                demoUser = new User();
                 ref.child("User").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        demoUser = new User();
+                        logUser(snapshot);
+                    }
+
+                    private void logUser(DataSnapshot snapshot) {
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                             User user1 = postSnapshot.getValue(User.class);
-                            if (demoUser.getTeam() == null){
-                                Log.e("fsdf","e=te be");
-                            }
                             if (user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
                                     user1.getPassword().equals(String.valueOf(edtPass.getText()))) {
                                 isLogged = true;
                                 demoUser = user1;
-                                if (demoUser.getTeam() == null || demoUser.getTeam().getAllPlayers() == null) {
-                                    demoUser.setTeam(new Team());
-                                    demoUser.getTeam().setAllPlayers(new ArrayList<Player>());
-                                }
+//                                if (demoUser.getTeam() == null || demoUser.getTeam().getAllPlayers() == null) {
+//                                    demoUser.setTeam(new Team());
+//                                    demoUser.getTeam().setAllPlayers(new ArrayList<Player>());
+//                                }
                                 Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
                                 Log.e("uu", user1.getUserName());
                                 loggedIn = true;
                                 startActivity(i);
-                                Toast.makeText(MainActivity.this, "da", Toast.LENGTH_LONG).show();
-
+                                //Toast.makeText(MainActivity.this, "da", Toast.LENGTH_LONG).show();
                                 break;
                             }
-
-
                         }
                         if (loggedIn == false) {
                             Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();

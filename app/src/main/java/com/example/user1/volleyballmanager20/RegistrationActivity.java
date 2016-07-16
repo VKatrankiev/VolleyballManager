@@ -88,7 +88,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 user.setPassword(pass);
                 user.setsName(sirName);
                 user.setEmail(email, RegistrationActivity.this);
-                user.setTeam(team);
 
 
                     ref.child("User").addListenerForSingleValueEvent(new ValueEventListener() {

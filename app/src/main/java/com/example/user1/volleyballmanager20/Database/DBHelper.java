@@ -70,7 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void deletePhoto(Bitmap bitmap) {
         SQLiteDatabase db = this.getWritableDatabase();
         String str = bitMapToString(bitmap);
-        db.delete(TABLE_PHOTOS, KEY_PICTURE + "=" + str, null);
+        db.delete(TABLE_PHOTOS, KEY_PICTURE + " = ?", new String[]{str});
     }
 
     public String bitMapToString(Bitmap bitmap){
