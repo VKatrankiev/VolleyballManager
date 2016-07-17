@@ -1,7 +1,10 @@
 package com.example.user1.volleyballmanager20;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //startActivity(new Intent(this, TacticsActivity.class));
+        
         players = new ArrayList<>();
         Firebase.setAndroidContext(this);
         final Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
@@ -112,22 +116,26 @@ public class MainActivity extends AppCompatActivity {
                             User user1 = postSnapshot.getValue(User.class);
                             if (user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
                                     user1.getPassword().equals(String.valueOf(edtPass.getText()))) {
-                                isLogged = true;
-                                demoUser = user1;
+                                if (isNetworkAvailable() == true) {
+                                    isLogged = true;
+                                    demoUser = user1;
 //                                if (demoUser.getTeam() == null || demoUser.getTeam().getAllPlayers() == null) {
 //                                    demoUser.setTeam(new Team());
 //                                    demoUser.getTeam().setAllPlayers(new ArrayList<Player>());
 //                                }
-                                Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
-                                Log.e("uu", user1.getUserName());
-                                loggedIn = true;
-                                startActivity(i);
-                                //Toast.makeText(MainActivity.this, "da", Toast.LENGTH_LONG).show();
-                                break;
+                                    Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
+                                    Log.e("uu", user1.getUserName());
+                                    loggedIn = true;
+                                    startActivity(i);
+                                    //Toast.makeText(MainActivity.this, "da", Toast.LENGTH_LONG).show();
+                                    break;
+                                }else{
+                                    Toast.makeText(MainActivity.this,"No internet connection",Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
-                        if (loggedIn == false) {
-                            Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+                            if (loggedIn == false) {
+                                Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
 
@@ -136,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+
             }
         });
 
@@ -154,5 +163,11 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(R.id.layoutFragmentContainer, fragment, tag).commit();
+    }
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
     }
 }

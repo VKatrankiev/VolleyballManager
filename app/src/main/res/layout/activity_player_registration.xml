@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_all"
     tools:context="com.example.user1.volleyballmanager20.PlayerRegistrationActivity">
 
     <android.support.v7.widget.Toolbar
