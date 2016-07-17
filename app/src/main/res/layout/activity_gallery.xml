@@ -15,10 +15,4 @@
         android:verticalSpacing="5dp">
     </GridView>
 
-    <Button
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:id="@+id/btn_erase_all"
-        android:layout_alignParentBottom="true"
-        android:background="@android:drawable/ic_delete"/>
 </RelativeLayout>

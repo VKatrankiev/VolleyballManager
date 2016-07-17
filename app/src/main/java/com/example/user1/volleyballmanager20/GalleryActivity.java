@@ -64,10 +64,11 @@ public class GalleryActivity extends AppCompatActivity {
     public Bitmap stringToBitMap(String encodedString) {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            Bitmap bitmap1 = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            Bitmap bitmap = Bitmap.createScaledBitmap(bitmap1, 300 , 300 , true);
             return bitmap;
         } catch (Exception e) {
-            e.getMessage();
+            //e.getMessage();
             return null;
         }
     }

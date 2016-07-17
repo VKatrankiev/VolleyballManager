@@ -69,7 +69,6 @@ public class TacticsActivity extends Activity implements View.OnClickListener {
 
 
     public Bitmap takeScreenshot() {
-
         View rootView = findViewById(android.R.id.content).getRootView();
         Bitmap bitmap = Bitmap.createBitmap(rootView.getWidth(), rootView.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);

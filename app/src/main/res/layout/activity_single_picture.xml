@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.user1.volleyballmanager20.SinglePictureActivity">
 
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_load_on_tactics"
+        android:id="@+id/single_picture"/>
     <Button
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -16,10 +22,7 @@
         android:id="@+id/btn_load_on_tactics"
         android:layout_alignParentBottom="true"
         android:background="@android:drawable/ic_menu_set_as"/>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/btn_load_on_tactics"
-        android:id="@+id/single_picture"/>
+
+
 
 </RelativeLayout>

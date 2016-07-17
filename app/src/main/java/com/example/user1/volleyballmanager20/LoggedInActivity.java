@@ -89,13 +89,18 @@ public class LoggedInActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("damn123", "damn2");
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if (snapshot.child("teamName").getValue().equals(teamName)) {
-                            Log.d("damn123", "damn3");
-                            loggedTeam = snapshot.getValue(Team.class);
-                            if (loggedTeam.getAllPlayers() == null) {
-                                loggedTeam.setAllPlayers(new ArrayList<Player>());
+                        if (snapshot.child("teamName").exists() && snapshot.child("teamName") != null) {
+                            if (snapshot.child("teamName").getValue().equals(teamName)) {
+                                Log.d("damn123", "damn3");
+                                loggedTeam = snapshot.getValue(Team.class);
+                                if (loggedTeam.getAllPlayers() == null) {
+                                    loggedTeam.setAllPlayers(new ArrayList<Player>());
+                                }
+                                break;
                             }
-                            break;
+                        } else {
+                            Firebase ref = snapshot.child("teamName").getRef();
+                            ref.setValue(teamName);
                         }
                     }
                 }
