@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background_all_resize"
     tools:context="com.example.user1.volleyballmanager20.MainActivity">
 
     <EditText
@@ -15,6 +16,8 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="username"
+        android:textColorHint="#fcfff2"
+        android:textColor="#fcfff2"
         android:ems="10"
         android:id="@+id/edtxt_us"
         android:layout_centerHorizontal="true"
@@ -26,6 +29,8 @@
         android:hint="password"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColorHint="#fcfff2"
+        android:textColor="#fcfff2"
         android:id="@+id/edtxt_pass"
         android:layout_below="@+id/edtxt_us"
         android:layout_alignLeft="@+id/edtxt_us"
@@ -36,6 +41,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Login"
+        android:textColor="#fcfff2"
         android:id="@+id/text_view_login"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

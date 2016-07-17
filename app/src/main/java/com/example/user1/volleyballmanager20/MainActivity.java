@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //startActivity(new Intent(this, TacticsActivity.class));
-        
+
         players = new ArrayList<>();
         Firebase.setAndroidContext(this);
         final Firebase rootRef = new Firebase(Config.FIREBASE_PLAYERS_URL);
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                             User user1 = postSnapshot.getValue(User.class);
                             if (user1.getUserName().equals(String.valueOf(edtUserName.getText())) &&
                                     user1.getPassword().equals(String.valueOf(edtPass.getText()))) {
+                                loggedIn = true;
                                 if (isNetworkAvailable() == true) {
                                     isLogged = true;
                                     demoUser = user1;
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 //                                }
                                     Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
                                     Log.e("uu", user1.getUserName());
-                                    loggedIn = true;
+                                    //loggedIn = true;
                                     startActivity(i);
                                     //Toast.makeText(MainActivity.this, "da", Toast.LENGTH_LONG).show();
                                     break;
@@ -153,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FragmentOne fragment = new FragmentOne();
                 getFragmentWithTag(fragment, null);
+                btnSearch.setVisibility(View.INVISIBLE);
+                btnReg.setVisibility(View.INVISIBLE);
+                btnLogin.setVisibility(View.INVISIBLE);
+                //onBackPressed();
             }
         });
     }
@@ -169,5 +174,12 @@ public class MainActivity extends AppCompatActivity {
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
+    }
+    @Override
+    public void onBackPressed(){
+        btnLogin.setVisibility(View.VISIBLE);
+        btnSearch.setVisibility(View.VISIBLE);
+        btnReg.setVisibility(View.VISIBLE);
+
     }
 }
