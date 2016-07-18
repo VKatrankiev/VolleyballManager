@@ -35,7 +35,7 @@ public class TacticsActivity extends Activity implements View.OnClickListener {
                 drawView.setBackground(SinglePictureActivity.loadOnTactics);
             }
         } else {
-            drawView.setBackgroundResource(R.drawable.volleyball_court_original);
+            drawView.setBackgroundResource(R.drawable.volleyball_court_original_resize);
         }
         btnUndo.setOnClickListener(this);
         btnGallery.setOnClickListener(this);

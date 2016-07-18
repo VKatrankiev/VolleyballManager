@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/volleyball_court_original"
+    android:background="@drawable/volleyball_court_original_resize"
     tools:context="com.example.user1.volleyballmanager20.TacticsActivity">
 
     <com.example.user1.volleyballmanager20.cmn.DrawingView

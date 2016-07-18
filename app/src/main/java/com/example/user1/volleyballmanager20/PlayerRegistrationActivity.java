@@ -115,11 +115,18 @@ public class PlayerRegistrationActivity extends AppCompatActivity {
             case R.id.action_search: {
                 FragmentOne fragment = new FragmentOne();
                 getFragmentWithTag(fragment, null);
+                btnRegister.setVisibility(View.INVISIBLE);
                 return true;
             }
             default: {
                 return super.onOptionsItemSelected(item);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        btnRegister.setVisibility(View.VISIBLE);
     }
 }

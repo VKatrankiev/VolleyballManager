@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 public class LoggedInActivity extends AppCompatActivity {
 
+    public static Context context;
     Button btnAddPlayer;
     Button btnDrawScheme;
 
@@ -79,6 +80,7 @@ public class LoggedInActivity extends AppCompatActivity {
         teamName = loggedUser.getTeamName();
         txtTeamNameLoggedIn.setText(teamName);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        context = mRecyclerView.getContext();
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         Firebase.setAndroidContext(this);
@@ -115,6 +117,11 @@ public class LoggedInActivity extends AppCompatActivity {
 
         mAdapter = new TeamAdapter(loggedTeam);
         mRecyclerView.setAdapter(mAdapter);
+        for(Player player : loggedTeam.getAllPlayers()){
+            if(player.isTitular()){
+                TeamAdapter.titularCount++;
+            }
+        }
     }
 
     @Override

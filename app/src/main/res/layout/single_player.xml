@@ -26,7 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-
+        android:hint="set C"
+        android:textColorHint="#ff0c39"
         android:textSize="20sp"
         android:id="@+id/txt_player_captain_loggedin" />
 
@@ -35,7 +36,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="20sp"
-
+        android:hint="set T"
+        android:textColorHint="#4fff57"
         android:id="@+id/txt_player_titular_loggedin" />
 
 </LinearLayout>
